@@ -57,3 +57,100 @@ body {
 main p {
   margin-bottom: 20px; /* Adjust spacing as needed */
 }
+
+/* Hero Section */
+.forfun-page .hero {
+  padding: 50px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+}
+
+.forfun-page .hero h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.forfun-page .hero p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* Highlights Section */
+.forfun-page .highlights,
+.forfun-page .interests,
+.forfun-page .fun-element,
+.forfun-page .cta {
+  padding: 40px 20px;
+  max-width: 800px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.forfun-page .highlights h2,
+.forfun-page .interests h2,
+.forfun-page .fun-element h2,
+.forfun-page .cta h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.forfun-page .highlights p,
+.forfun-page .interests ul,
+.forfun-page .cta p {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* Interests Section */
+.forfun-page .interests ul {
+  list-style: none;
+  padding: 0;
+}
+
+.forfun-page .interests li {
+  margin: 10px 0;
+}
+
+/* Fun Element (Grid) */
+.forfun-page .fun-element .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  text-align: left;
+}
+
+.forfun-page .fun-element .fact {
+  background-color: #f1f1f1;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Call to Action Section */
+.forfun-page .cta p {
+  margin-bottom: 20px;
+}
+
+.forfun-page .cta-button {
+  display: inline-block;
+  background-color: #3b312f;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.forfun-page .cta-button:hover {
+  background-color: #5d504c;
+}
+
+/* Footer */
+.forfun-page .footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #3b312f;
+  color: #fff;
+}
