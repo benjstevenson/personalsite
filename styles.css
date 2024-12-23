@@ -57,13 +57,20 @@ body {
 main p {
   margin-bottom: 20px; /* Adjust spacing as needed */
 }
+/* Global Page Background */
+body.forfun-page {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+}
 
-/* Hero Section */
+/* Hero Section with Gradient Background */
 .forfun-page .hero {
-  padding: 50px;
+  padding: 80px 20px;
   text-align: center;
-  background-color: #f9f9f9;
-  border-bottom: 1px solid #ddd;
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  color: white;
 }
 
 .forfun-page .hero h1 {
@@ -73,84 +80,69 @@ main p {
 
 .forfun-page .hero p {
   font-size: 1.2rem;
-  color: #555;
+  margin-top: 10px;
 }
 
-/* Highlights Section */
-.forfun-page .highlights,
-.forfun-page .interests,
-.forfun-page .fun-element,
-.forfun-page .cta {
-  padding: 40px 20px;
-  max-width: 800px;
-  margin: 20px auto;
+/* Highlights Section with Light Background */
+.forfun-page .highlights {
+  padding: 60px 20px;
+  background-color: #f9f9f9;
   text-align: center;
 }
 
-.forfun-page .highlights h2,
-.forfun-page .interests h2,
-.forfun-page .fun-element h2,
-.forfun-page .cta h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
+/* Interests Section with Soft Blue Background */
+.forfun-page .interests {
+  padding: 60px 20px;
+  background-color: #eaf6ff;
+  text-align: center;
 }
 
-.forfun-page .highlights p,
-.forfun-page .interests ul,
-.forfun-page .cta p {
-  font-size: 1.1rem;
-  color: #333;
+/* Fun Element Grid */
+.forfun-page .fun-element {
+  padding: 60px 20px;
+  background-color: #fff;
+  text-align: center;
 }
 
-/* Interests Section */
-.forfun-page .interests ul {
-  list-style: none;
-  padding: 0;
-}
-
-.forfun-page .interests li {
-  margin: 10px 0;
-}
-
-/* Fun Element (Grid) */
 .forfun-page .fun-element .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
-  text-align: left;
 }
 
 .forfun-page .fun-element .fact {
-  background-color: #f1f1f1;
-  padding: 15px;
-  border-radius: 8px;
-  font-size: 1rem;
-  color: #333;
+  background: #f1f1f1;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Call to Action Section */
-.forfun-page .cta p {
-  margin-bottom: 20px;
+/* CTA Section with Bright Background */
+.forfun-page .cta {
+  padding: 80px 20px;
+  text-align: center;
+  background: linear-gradient(45deg, #ff7eb3, #ff758c);
+  color: white;
 }
 
 .forfun-page .cta-button {
   display: inline-block;
-  background-color: #3b312f;
-  color: #fff;
+  background-color: #fff;
+  color: #ff758c;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border-radius: 50px;
   text-decoration: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 1rem;
 }
 
 .forfun-page .cta-button:hover {
-  background-color: #5d504c;
+  background-color: #ffe6ec;
 }
 
-/* Footer */
+/* Footer Section */
 .forfun-page .footer {
-  text-align: center;
-  padding: 20px;
+  padding: 30px;
   background-color: #3b312f;
-  color: #fff;
+  color: white;
+  text-align: center;
 }
