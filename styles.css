@@ -57,92 +57,141 @@ body {
 main p {
   margin-bottom: 20px; /* Adjust spacing as needed */
 }
-/* Global Page Background */
-body.forfun-page {
-  font-family: 'Arial', sans-serif;
-  line-height: 1.6;
-  color: #333;
-  margin: 0;
+
+/* For Fun Page Styles */
+.forfun-page {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: var(--dark);
+    background-color: var(--light);
 }
 
-/* Hero Section with Gradient Background */
+/* Variables - you can add these to your existing CSS variables if you have them */
+.forfun-page {
+    --primary: #1a365d;
+    --primary-light: #2d5a9c;
+    --secondary: #64748b;
+    --dark: #1e293b;
+    --light: #f8fafc;
+    --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+}
+
+.forfun-page .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
 .forfun-page .hero {
-  padding: 80px 20px;
-  text-align: center;
-  background: linear-gradient(45deg, #6a11cb, #2575fc);
-  color: white;
+    background: var(--gradient);
+    color: white;
+    padding: 8rem 0 6rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.forfun-page .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: var(--light);
+    transform: skewY(-3deg);
 }
 
 .forfun-page .hero h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
 }
 
 .forfun-page .hero p {
-  font-size: 1.2rem;
-  margin-top: 10px;
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 600px;
 }
 
-/* Highlights Section with Light Background */
-.forfun-page .highlights {
-  padding: 60px 20px;
-  background-color: #f9f9f9;
-  text-align: center;
+.forfun-page .profile-section {
+    padding: 6rem 0;
+    display: flex;
+    gap: 4rem;
+    align-items: center;
 }
 
-/* Interests Section with Soft Blue Background */
-.forfun-page .interests {
-  padding: 60px 20px;
-  background-color: #eaf6ff;
-  text-align: center;
+.forfun-page .profile-image {
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+    object-fit: cover;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    background: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    color: var(--secondary);
 }
 
-/* Fun Element Grid */
-.forfun-page .fun-element {
-  padding: 60px 20px;
-  background-color: #fff;
-  text-align: center;
+.forfun-page .content-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
 }
 
-.forfun-page .fun-element .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+.forfun-page .content-card:hover {
+    transform: translateY(-5px);
 }
 
-.forfun-page .fun-element .fact {
-  background: #f1f1f1;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.forfun-page .section-title {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
 }
 
-/* CTA Section with Bright Background */
-.forfun-page .cta {
-  padding: 80px 20px;
-  text-align: center;
-  background: linear-gradient(45deg, #ff7eb3, #ff758c);
-  color: white;
+.forfun-page .button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: var(--gradient);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
 }
 
-.forfun-page .cta-button {
-  display: inline-block;
-  background-color: #fff;
-  color: #ff758c;
-  padding: 15px 30px;
-  font-size: 1.2rem;
-  border-radius: 50px;
-  text-decoration: none;
+.forfun-page .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-.forfun-page .cta-button:hover {
-  background-color: #ffe6ec;
+.forfun-page .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
 }
 
-/* Footer Section */
-.forfun-page .footer {
-  padding: 30px;
-  background-color: #3b312f;
-  color: white;
-  text-align: center;
+@media (max-width: 768px) {
+    .forfun-page .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .forfun-page .profile-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 4rem 0;
+    }
+
+    .forfun-page .profile-image {
+        width: 250px;
+        height: 250px;
+        margin: 0 auto;
+    }
 }
