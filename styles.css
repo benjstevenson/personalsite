@@ -191,10 +191,10 @@ main p {
     
 }
 .quote-container {
-  max-width: 600px; /* Adjust this value as needed */
+  max-width: 800px; /* Adjust this value as needed */
   margin: 0 auto; /* Centers the container */
   padding: 20px; /* Adds some padding around the quotes */
-  text-align: center; /* Ensures the text aligns to the left within the container */
+  text-align: left; /* Ensures the text aligns to the left within the container */
 }
 
 #quote-list {
@@ -203,8 +203,8 @@ main p {
 }
 
 #quote-list li {
-  margin-bottom: 15px; /* Adds spacing between quotes */
+  margin-bottom: 35px; /* Adds spacing between quotes */
   line-height: 1.6; /* Improves readability */
-  font-size: 1.2rem; /* Adjusts font size for better visibility */
+  font-size: 1.0rem; /* Adjusts font size for better visibility */
   color: #333; /* Makes text color consistent */
 }
