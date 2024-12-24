@@ -18,5 +18,36 @@
     <p>"Birds fly, fish swim, and deals fall through" - Paul Graham</p>
     <p>"One often finds his destiny on the path he takes to avoid it" - Master Oogway</p>
   </main>
+  <section>
+  <ul id="quote-list"></ul>
+  </section>
+
+  <script>
+    const quotes = [
+      "Those whom the gods wish to destroy they first call promising - James Bond",
+  
+      "The fool, with all his other faults, has this also, he is always getting ready to live. - Epictetus",
+  
+      "You want to know how to paint a perfect painting? Its easy. Make yourself perfect and then just paint naturally. ― Robert M. Pirsig, Zen and the Art of Motorcycle Maintenance: An Inquiry Into Values",
+  
+      "abundance is cool, but more abundance is cooler - dr mike isratel",
+  
+      "Consistency is the last refuge of the unimaginative - Oscar Wilde",
+  
+      "Life is good if it squishes nicely when you poke it. - Sasha chapin",
+  
+      "The forest was shrinking but the trees kept voting for the axe, for the axe was clever and convinced the trees that because his handle was made of wood he was one of them. - Turkish proverb",
+  
+      "What is to give light must endure burning - Victor Frankl"
+    ];
+  
+    const quoteList = document.getElementById("quote-list");
+  
+    quotes.forEach(quote => {
+      const listItem = document.createElement("li");
+      listItem.textContent = quote;
+      quoteList.appendChild(listItem);
+    });
+  </script>
 </body>
 </html>
