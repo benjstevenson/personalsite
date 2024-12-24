@@ -72,6 +72,12 @@ main p {
     color: var(--secondary);
 }
 
+.profile-section {
+    padding: 6rem 0;
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+}
 
 
 
@@ -130,12 +136,6 @@ main p {
     max-width: 600px;
 }
 
-.forfun-page .profile-section {
-    padding: 6rem 0;
-    display: flex;
-    gap: 4rem;
-    align-items: center;
-}
 
 .forfun-page .content-card {
     background: white;
