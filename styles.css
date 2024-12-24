@@ -73,12 +73,11 @@ main p {
 }
 
 .profile-section {
-    padding: 6rem 0;
     display: flex;
-    gap: 4rem;
+    justify-content: center;
     align-items: center;
+    padding: 20px; /* Optional spacing */
 }
-
 
 
 /* For Fun Page Styles */
