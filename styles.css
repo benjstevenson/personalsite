@@ -73,6 +73,9 @@ main p {
 }
 
 .profile-section {
+    float: none; /* Reset any floats */
+    text-align: center; /* Center inline content */
+    margin: 0 auto; /* Center the section container itself */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -185,15 +188,5 @@ main p {
         font-size: 2.5rem;
     }
     
-    .forfun-page .profile-section {
-        flex-direction: column;
-        text-align: center;
-        padding: 4rem 0;
-    }
-
-    .forfun-page .profile-image {
-        width: 250px;
-        height: 250px;
-        margin: 0 auto;
-    }
+    
 }
