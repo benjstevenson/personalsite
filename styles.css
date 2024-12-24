@@ -191,10 +191,10 @@ main p {
     
 }
 .quote-container {
-  max-width: 800px; /* Adjust this value as needed */
+  max-width: 600px; /* Adjust this value as needed */
   margin: 0 auto; /* Centers the container */
   padding: 20px; /* Adds some padding around the quotes */
-  text-align: left; /* Ensures the text aligns to the left within the container */
+  text-align: center; /* Ensures the text aligns to the left within the container */
 }
 
 #quote-list {
