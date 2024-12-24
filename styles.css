@@ -190,3 +190,21 @@ main p {
     
     
 }
+.quote-container {
+  max-width: 800px; /* Adjust this value as needed */
+  margin: 0 auto; /* Centers the container */
+  padding: 20px; /* Adds some padding around the quotes */
+  text-align: left; /* Ensures the text aligns to the left within the container */
+}
+
+#quote-list {
+  list-style-type: none; /* Removes default bullet points */
+  padding: 0;
+}
+
+#quote-list li {
+  margin-bottom: 15px; /* Adds spacing between quotes */
+  line-height: 1.6; /* Improves readability */
+  font-size: 1.2rem; /* Adjusts font size for better visibility */
+  color: #333; /* Makes text color consistent */
+}
