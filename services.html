@@ -8,14 +8,31 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
       margin: 0;
-      padding: 2rem;
-      line-height: 1.6;
+      padding: 0;
       background-color: #f9f9f9;
       color: #333;
     }
+    nav {
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+    }
+    nav a {
+      text-decoration: none;
+      color: #333;
+      margin-left: 1.5rem;
+      font-weight: 500;
+    }
+    .nav-links {
+      display: flex;
+    }
     .container {
       max-width: 800px;
-      margin: auto;
+      margin: 2rem auto;
       background: white;
       padding: 2rem;
       border-radius: 12px;
@@ -27,9 +44,21 @@
   </style>
 </head>
 <body>
+
+  <!-- Navbar -->
+  <nav>
+    <div><strong>Ben Stevenson</strong></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
   <div class="container">
     <h1>Services</h1>
-    <p>I help founders and early-stage companies grow faster with practical, content and marketing strategies.</p>
+    <p>I help founders and early-stage companies grow faster with practical content and marketing strategies.</p>
 
     <h2>What We Do</h2>
     <ul>
