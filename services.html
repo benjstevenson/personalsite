@@ -1,58 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Services | Ben Stevenson Consulting</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services</title>
+  <link rel="stylesheet" href="styles.css">
+
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    nav {
-      background-color: #fff;
-      border-bottom: 1px solid #eee;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 1px 5px rgba(0,0,0,0.03);
-    }
-    nav a {
-      text-decoration: none;
-      color: #333;
-      margin-left: 1.5rem;
-      font-weight: 500;
-    }
-    .nav-links {
-      display: flex;
-    }
-    .container {
+    .services-container {
       max-width: 800px;
       margin: 2rem auto;
-      background: white;
       padding: 2rem;
+      background: #fff;
       border-radius: 12px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     }
-    h1, h2 {
+    .services-container h1, h2 {
       color: #222;
+    }
+    .services-container ul {
+      padding-left: 20px;
     }
   </style>
 </head>
 <body>
-
   <!-- Navbar -->
-  <nav>
-    <div><strong>Ben Stevenson</strong></div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="contact.html">Contact</a>
-    </div>
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="work.html">Work with me on...</a>
+    <a href="contact.html">Contact</a>
   </nav>
 
   <!-- Main Content -->
