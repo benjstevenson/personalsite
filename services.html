@@ -5,27 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Services</title>
   <link rel="stylesheet" href="styles.css">
-
   <style>
-    .services-container {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 2rem;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    .main-content {
+      max-width: 700px;
+      margin: 100px auto;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 16px;
+      font-family: system-ui, sans-serif;
+      text-align: center;
     }
-    .services-container h1, h2 {
-      color: #222;
+
+    .main-content h1,
+    .main-content h2 {
+      margin-top: 32px;
+      margin-bottom: 16px;
     }
-    .services-container ul {
-      padding-left: 20px;
+
+    .main-content p {
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .main-content .offering {
+      font-weight: bold;
+      display: block;
+      margin-top: 12px;
+    }
+
+    a {
+      color: #0066cc;
     }
   </style>
 </head>
 <body>
-  <!-- Navbar -->
   <nav class="navbar">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
@@ -33,17 +46,14 @@
     <a href="contact.html">Contact</a>
   </nav>
 
-  <!-- Main Content -->
-  <div class="services-container">
+  <div class="main-content">
     <h1>Services</h1>
     <p>I help early-stage founders and lean teams grow faster using practical, AI-assisted marketing strategies.</p>
 
     <h2>Offerings</h2>
-    <ul>
-      <li><strong>Growth Strategy:</strong> GTM positioning, funnel design, copy, and scalable acquisition channels.</li>
-      <li><strong>Automation + Ops:</strong> CRM setups, AI-powered lead gen, and repeatable sales workflows.</li>
-      <li><strong>AI Consulting:</strong> Custom GPT workflows, internal tools, and team onboarding to AI systems.</li>
-    </ul>
+    <p><span class="offering">Growth Strategy:</span> GTM positioning, funnel design, copy, and scalable acquisition channels.</p>
+    <p><span class="offering">Automation + Ops:</span> CRM setups, AI-powered lead gen, and repeatable sales workflows.</p>
+    <p><span class="offering">AI Consulting:</span> Custom GPT workflows, internal tools, and team onboarding to AI systems.</p>
 
     <h2>Who I Work With</h2>
     <p>My clients are usually founders, marketers, or operators who want sharp execution without bloated agency fluff.</p>
