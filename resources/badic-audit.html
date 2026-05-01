@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The BADIC AI Audit</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    :root {
+      --brown: #3b312f;
+      --brown-light: #5a4a47;
+      --cream: #faf8f6;
+      --border: #e8e3df;
+      --text: #222;
+      --muted: #777;
+      --b: #3b6fd4;
+      --a: #d47c3b;
+      --d: #c4a020;
+      --i: #3a9e6a;
+      --c: #c43b3b;
+    }
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: var(--cream); color: var(--text); margin: 0; padding: 0; }
+    .audit-wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 80px; }
+    .progress-bar-wrap { position: sticky; top: 0; background: #fff; border-bottom: 1px solid var(--border); padding: 12px 20px; z-index: 100; }
+    .progress-bar-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+    .progress-track { flex: 1; height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--brown); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
+    .progress-label { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .intro-hero { text-align: center; padding: 60px 0 40px; }
+    .intro-hero .badge { display: inline-block; background: var(--brown); color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 20px; }
+    .intro-hero h1 { font-size: 2.4rem; font-weight: bold; color: var(--brown); margin-bottom: 14px; line-height: 1.2; }
+    .intro-hero p { font-size: 1.05rem; color: #555; max-width: 480px; margin: 0 auto 32px; line-height: 1.7; }
+    .buckets-preview { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 36px; }
+    .bucket-pill { display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 99px; font-size: 0.85rem; font-weight: 600; background: #fff; border: 2px solid currentColor; }
+    .bucket-pill.b { color: var(--b); }
+    .bucket-pill.a { color: var(--a); }
+    .bucket-pill.d { color: var(--d); }
+    .bucket-pill.i { color: var(--i); }
+    .bucket-pill.c { color: var(--c); }
+    .company-select-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 32px 0; }
+    .company-option { border: 2px solid var(--border); border-radius: 12px; padding: 18px 16px; cursor: pointer; transition: all 0.2s ease; text-align: left; background: #fff; }
+    .company-option:hover { border-color: var(--brown-light); }
+    .company-option.selected { border-color: var(--brown); background: #fdf9f7; }
+    .company-option .co-icon { font-size: 1.6rem; margin-bottom: 8px; }
+    .company-option .co-label { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .company-option .co-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
+    .btn { display: inline-block; background: var(--brown); color: #fff; border: none; border-radius: 10px; padding: 14px 32px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease; text-decoration: none; }
+    .btn:hover { background: var(--brown-light); transform: translateY(-1px); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .btn-outline { background: transparent; color: var(--brown); border: 2px solid var(--brown); }
+    .btn-outline:hover { background: var(--brown); color: #fff; }
+    .bucket-header { display: flex; align-items: center; gap: 14px; margin: 48px 0 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border); }
+    .bucket-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+    .bucket-header h2 { font-size: 1.4rem; font-weight: bold; color: var(--text); margin: 0; }
+    .bucket-header .bucket-sub { font-size: 0.85rem; color: var(--muted); margin: 2px 0 0; }
+    .bucket-note { background: #fff; border-left: 3px solid var(--border); padding: 10px 14px; font-size: 0.85rem; color: #666; border-radius: 0 8px 8px 0; margin-bottom: 24px; line-height: 1.5; }
+    .question-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+    .question-card .q-text { font-size: 0.95rem; color: var(--text); line-height: 1.5; margin-bottom: 14px; font-weight: 600; }
+    .scale-row { display: flex; align-items: center; gap: 0; }
+    .scale-label { font-size: 0.72rem; color: var(--muted); flex-shrink: 0; width: 60px; line-height: 1.3; }
+    .scale-label.right { text-align: right; }
+    .scale-btns { display: flex; flex: 1; gap: 6px; justify-content: center; }
+    .scale-btn { width: 40px; height: 40px; border-radius: 8px; border: 2px solid var(--border); background: #fff; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.15s ease; color: var(--muted); }
+    .scale-btn:hover { border-color: var(--brown); color: var(--brown); }
+    .scale-btn.selected { background: var(--brown); border-color: var(--brown); color: #fff; }
+    .nav-btns { display: flex; justify-content: space-between; align-items: center; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .bucket-score-mini { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+    .gate-wrap { text-align: center; padding: 60px 20px; }
+    .gate-wrap h2 { font-size: 1.8rem; font-weight: bold; color: var(--brown); margin-bottom: 12px; }
+    .gate-wrap p { font-size: 1rem; color: #555; max-width: 400px; margin: 0 auto 28px; line-height: 1.6; }
+    .email-form { display: flex; gap: 10px; max-width: 400px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+    .email-input { flex: 1; min-width: 220px; padding: 13px 16px; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; outline: none; transition: border-color 0.2s; }
+    .email-input:focus { border-color: var(--brown); }
+    .gate-note { font-size: 0.78rem; color: var(--muted); margin-top: 12px; }
+    .submitting-msg { color: var(--muted); font-size: 0.9rem; margin-top: 10px; }
+    .results-hero { text-align: center; padding: 48px 0 32px; }
+    .results-hero h2 { font-size: 2rem; font-weight: bold; color: var(--brown); margin-bottom: 10px; }
+    .results-hero p { color: #555; font-size: 1rem; }
+    .badic-bars { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin: 28px 0; }
+    .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .bar-row:last-child { margin-bottom: 0; }
+    .bar-label { width: 80px; font-size: 0.85rem; font-weight: 700; flex-shrink: 0; }
+    .bar-track { flex: 1; height: 18px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 99px; transition: width 1s ease; width: 0%; }
+    .bar-score { font-size: 0.85rem; font-weight: 700; color: var(--muted); width: 44px; text-align: right; flex-shrink: 0; }
+    .unlock-card { border-radius: 16px; padding: 28px; margin: 24px 0; text-align: left; }
+    .unlock-card .unlock-tag { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; opacity: 0.8; }
+    .unlock-card h3 { font-size: 1.4rem; font-weight: bold; margin-bottom: 8px; }
+    .unlock-card p { font-size: 0.95rem; line-height: 1.6; opacity: 0.85; }
+    .first-moves { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin: 24px 0; }
+    .first-moves h3 { font-size: 1.1rem; font-weight: bold; color: var(--brown); margin-bottom: 18px; }
+    .move-item { display: flex; gap: 14px; margin-bottom: 18px; align-items: flex-start; }
+    .move-item:last-child { margin-bottom: 0; }
+    .move-num { width: 28px; height: 28px; border-radius: 50%; background: var(--brown); color: #fff; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .move-text { font-size: 0.92rem; color: #444; line-height: 1.6; }
+    .results-footer { text-align: center; margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+    @media (max-width: 500px) {
+      .company-select-grid { grid-template-columns: 1fr; }
+      .intro-hero h1 { font-size: 1.8rem; }
+      .scale-label { width: 44px; font-size: 0.65rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="progress-bar-wrap" id="progressWrap" style="display:none">
+  <div class="progress-bar-inner">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-label" id="progressLabel">0 / 30</span>
+  </div>
+</div>
+
+<div class="audit-wrap">
+
+  <div class="screen active" id="screen-intro">
+    <nav class="sitenav" style="padding-top:1.5rem">
+      <a href="../index.html">Home</a>
+      <a href="../resources.html">Resources</a>
+    </nav>
+    <div class="intro-hero">
+      <span class="badge">Free AI Audit</span>
+      <h1>The BADIC Audit</h1>
+      <p>Find out exactly where AI can move the needle in your business — and where you're leaving value on the table.</p>
+      <div class="buckets-preview">
+        <span class="bucket-pill b">🔵 Build</span>
+        <span class="bucket-pill a">🟠 Automate</span>
+        <span class="bucket-pill d">🟡 Decide</span>
+        <span class="bucket-pill i">🟢 Interface</span>
+        <span class="bucket-pill c">🔴 Create</span>
+      </div>
+      <p style="font-size:0.9rem;color:var(--muted)">30 questions &nbsp;·&nbsp; ~10 minutes &nbsp;·&nbsp; Personalized results</p>
+    </div>
+    <p style="font-weight:700;font-size:1rem;margin-bottom:16px;text-align:center">First, what best describes your company?</p>
+    <div class="company-select-grid">
+      <div class="company-option" data-type="solo" onclick="selectCompany(this)">
+        <div class="co-icon">🧑‍💻</div>
+        <div class="co-label">Solo / Freelancer / Creator</div>
+        <div class="co-desc">Running this mostly yourself. Maybe a contractor or two.</div>
+      </div>
+      <div class="company-option" data-type="service" onclick="selectCompany(this)">
+        <div class="co-icon">🏢</div>
+        <div class="co-label">Service Business</div>
+        <div class="co-desc">Agency, consultancy, local business, real estate, law firm.</div>
+      </div>
+      <div class="company-option" data-type="saas" onclick="selectCompany(this)">
+        <div class="co-icon">🚀</div>
+        <div class="co-label">Tech Startup / SaaS</div>
+        <div class="co-desc">You have developers. You're building a product.</div>
+      </div>
+      <div class="company-option" data-type="midmarket" onclick="selectCompany(this)">
+        <div class="co-icon">🏗️</div>
+        <div class="co-label">Mid-Market Company</div>
+        <div class="co-desc">50–500 people. Multiple departments.</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:8px">
+      <button class="btn" id="startBtn" onclick="startAudit()" disabled>Start the audit &rarr;</button>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-questions"></div>
+
+  <div class="screen" id="screen-gate">
+    <div class="gate-wrap">
+      <div style="font-size:2.5rem;margin-bottom:16px">🎯</div>
+      <h2>Your results are ready</h2>
+      <p>Drop your email to see your BADIC profile and personalized first moves.</p>
+      <div class="email-form">
+        <input class="email-input" type="email" id="emailInput" placeholder="you@example.com" />
+        <button class="btn" onclick="submitEmail()">See my results</button>
+      </div>
+      <p class="gate-note">No spam. Just your results.</p>
+      <p class="submitting-msg" id="submittingMsg" style="display:none">Saving your results...</p>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-results">
+    <div class="results-hero">
+      <h2>Your BADIC Profile</h2>
+      <p>Here's where you stand across the five buckets.</p>
+    </div>
+    <div class="badic-bars" id="badicBars"></div>
+    <div id="unlockCard"></div>
+    <div id="firstMovesSection"></div>
+    <div class="results-footer">
+      <p>The BADIC Framework &nbsp;·&nbsp; <a href="../resources.html" style="color:var(--brown)">More resources</a></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const SHEETS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbzfywYpKaKXdHxwfTB8EXG4yQe7tEWpl8g_MDyJd9brX710078lt5fOsfyEwyoY2tCt/exec';
+
+const BUCKETS = [
+  { key:'B', label:'Build', color:'#3b6fd4', sub:'Using AI to write and ship software faster', note:'This bucket applies if you build anything with code. If your business has zero dev work, give this section all 1s and move on.', questions:['Do you or your team use an AI coding tool (Cursor, Claude Code, GitHub Copilot, or similar) in your regular workflow?','Are you using AI to write new features or tools — not just autocomplete or small edits?','Have you shipped something in the last 90 days that AI wrote a majority of?','Do you have a standard way of giving AI context about your codebase so it produces better output? (e.g. a project instructions file or documented conventions)','Is AI coding usage consistent across your team — not just one person\'s habit?','Do you have a review process for AI-generated code that catches security or quality issues before they ship?'] },
+  { key:'A', label:'Automate', color:'#d47c3b', sub:'Replacing repetitive workflows with AI', note:'Think: anything that happens more than 10 times a week that follows a predictable pattern. Lead follow-up, scheduling, document processing, data entry.', questions:['Have you mapped out at least one workflow in your business that AI is actively handling end-to-end?','Do you use AI for lead qualification, appointment booking, or inbound triage — rather than having a human handle every first touch?','Are any of your document-heavy processes (invoices, contracts, reports, summaries) being handled or accelerated by AI?','Have you redesigned a workflow around AI — rather than just adding AI as a layer on top of how things already worked?','Is the automation running reliably without someone manually checking or restarting it regularly?','Do you know the time or cost saving from your AI automations in concrete terms?'] },
+  { key:'D', label:'Decide', color:'#c4a020', sub:'Using AI to surface insights and inform decisions', note:'The "AI as analyst" bucket. Think: research, competitive intel, performance data, document synthesis, forecasting. Works best when your data is reasonably clean.', questions:['Do you regularly use AI to synthesize research, reports, or internal documents rather than reading everything manually?','Is your core business data (CRM, analytics, financials) accessible in a format that AI can actually work with?','Have you used AI in the last 30 days to produce a summary, forecast, or recommendation that changed or informed a real decision?','Do you have a reliable way to query your internal knowledge — past work, past decisions, client history — without digging through folders?','Is someone on your team specifically responsible for maintaining data quality so AI outputs are trustworthy?','When AI surfaces an insight, do you have a process to verify it before acting on it?'] },
+  { key:'I', label:'Interface', color:'#3a9e6a', sub:'AI as the customer or internal-facing layer', note:'Anything where AI is the first point of contact — chatbots, voice agents, internal knowledge assistants, support deflection.', questions:['Do you have any AI-powered touchpoint handling real interactions — customer service, lead chat, internal Q&A, or similar?','Is your AI interface trained on or connected to your actual business information — not just a generic out-of-the-box chatbot?','Can customers or team members get a useful answer from your AI interface without needing a human to step in the majority of the time?','Do you know what percentage of inbound interactions your AI handles fully vs. escalates to a human?','Have you audited your AI interface in the last 60 days to catch bad answers or failure cases?','Is the experience good enough that you\'d be comfortable with a prospect seeing it as a first impression of your business?'] },
+  { key:'C', label:'Create', color:'#c43b3b', sub:'AI as part of your content and creative production', note:'Marketing copy, ad creative, social content, email sequences, images, video. If you publish anything externally, this bucket applies.', questions:['Do you use AI to write or draft marketing content as a standard part of your workflow — not just occasionally?','Are you using AI to generate multiple creative or copy variations to test, rather than producing one version and shipping it?','Do you have a documented brand voice or style guide that you feed into AI so outputs sound like you?','Have you used AI image or video tools for actual published content in the last 90 days?','Is AI content production systematized — meaning someone new to your team could follow a process and get good output — or does it depend on one person knowing the right prompts?','Do you have a review step before AI-generated content is published, specifically checking for brand consistency and factual accuracy?'] },
+];
+
+const BUCKET_DESCRIPTIONS = { B:'Using AI to write, debug, and ship code. This is where ROI is most measurable.', A:'Replacing repetitive workflows across ops, admin, and customer contact.', D:'Feeding data into AI to surface insights and inform decisions.', I:'AI as the customer-facing or internal-facing layer.', C:'Generating marketing content, ad creative, copy, and media.' };
+
+const FIRST_MOVES = {
+  B: {
+    solo: ['Install Cursor or sign up for Claude Code. Spend one afternoon building a tool you\'ve been putting off — a script, a custom dashboard, an automation. Just prompt and see what happens.','Build your first internal tool: something that saves you 30+ minutes a week. Examples: a content repurposing script, a YouTube comment summarizer, a client onboarding doc generator.','Document your wins. When AI builds something useful, write down the prompt that worked. That\'s your personal playbook.'],
+    service: ['Identify one internal tool you\'ve been wanting to build but couldn\'t justify the dev cost — a client portal, a reporting dashboard, a proposal generator. Use Claude Code or Cursor to build a working prototype this week.','Have AI audit your existing scripts, templates, or automations for bugs and inefficiencies.','Set a standard: any repetitive technical task that takes someone on your team more than 2 hours should first be tested with an AI coding tool.'],
+    saas: ['If you\'re not already at 50%+ AI-written code, set that as a 90-day target and measure it. Most teams can get to 70%+ with intentional adoption.','Add a context file (like CLAUDE.md) to your main repos with codebase conventions. This single move dramatically improves AI output quality.','Build a security review step into your PR process specifically for AI-generated code. Especially on anything touching auth, payments, or user data.'],
+    midmarket: ['Run an AI coding tool pilot with your 3 most productive engineers for 30 days. Measure PR volume and deployment frequency before and after.','Create a company-wide standard for AI coding tool usage — which tools are approved, what the review process is, how to handle IP and security concerns.','Identify your biggest internal tooling debt. Many of these are now a 2-week project, not a 2-year one.'],
+  },
+  A: {
+    solo: ['Map your week on paper. Find the one thing you do most often that follows a predictable pattern. That\'s your first automation target.','Build it in Make or n8n. Start with a simple trigger-action sequence. Automate the one thing that eats the most time.','Once it runs for 2 weeks without breaking, pick the next one. Compound slowly.'],
+    service: ['Your biggest unlock is almost certainly inbound lead response. Set up an AI-powered immediate response and qualification sequence today.','If you do any kind of regular reporting, automate the data collection and draft generation. A human reviews and sends — but AI does the 80%.','Look at your client onboarding process. Every step that involves sending the same email or document is an automation opportunity.'],
+    saas: ['Your first target should be internal ops, not product. Sales follow-up, support triage, meeting summaries, and weekly reporting are all automatable now without an engineer.','Use AI to handle Tier-1 support questions. Even deflecting 30% of inbound tickets has a measurable impact on team capacity.','Automate your own analytics. Set up a weekly AI-generated summary of your key metrics so you\'re not manually pulling dashboards every Monday.'],
+    midmarket: ['Run a workflow audit across departments. Ask each team lead: what\'s the most repetitive thing your team does every week?','Pick one high-volume, low-complexity process in finance or ops and pilot an AI automation. Prove the ROI before scaling.','Redesign the workflow around AI — don\'t just add AI on top of the old process.'],
+  },
+  D: {
+    solo: ['Build a personal knowledge base. Every important document, note, and piece of research should be somewhere AI can query it.','Before making any significant business decision, spend 15 minutes feeding the relevant data to an AI and asking for a structured breakdown of your options.','Use AI for competitive research on a regular cadence. Monthly is fine. But make it a habit.'],
+    service: ['Your client data is your biggest underused asset. Regularly query your past client work and communication history to find patterns.','Set up an AI-assisted weekly review of your business metrics. Feed the numbers in, ask the right questions, get a written summary.','Before every proposal, have AI synthesize everything you know about the prospect and their industry.'],
+    saas: ['If your product analytics aren\'t in a format AI can work with, that\'s your first fix. Clean, structured data is the foundation.','Build an internal AI research assistant connected to your product docs, support history, and user feedback.','Set up automated weekly AI summaries of your key growth metrics with flagged anomalies.'],
+    midmarket: ['Before investing in any AI analytics tool, audit your data quality. Garbage in, garbage out.','Pilot an AI assistant for one knowledge-heavy team — legal, finance, or strategy — for 30 days.','Define what "a decision informed by AI" means for your organization and track how often it\'s happening.'],
+  },
+  I: {
+    solo: ['Set up an AI chatbot on your website trained on your services, pricing, and FAQs. This captures leads while you\'re asleep.','Build an internal knowledge assistant for yourself — a place where you can query all your past work and client notes in plain language.','If you do discovery calls, create an AI pre-qualification sequence so you show up to every call prepared.'],
+    service: ['Inbound lead response is your most urgent Interface opportunity. Set up AI to respond to new inquiries within minutes.','Build a client-facing FAQ bot trained on your actual service information.','Audit what your AI interface is actually saying. Review conversation logs monthly.'],
+    saas: ['Start with support deflection. Calculate your current cost-per-ticket, then model what 30% deflection would save.','Build an internal bot that answers questions about your product, processes, and documentation.','Track your AI interface\'s deflection rate, escalation rate, and customer satisfaction score.'],
+    midmarket: ['Customer service is your highest-ROI starting point. Model the Klarna case for your own numbers.','An AI knowledge base solves information discovery, repeated questions, and slow onboarding all at once.','Before deploying any customer-facing AI interface, define what "good" looks like and deploy to a subset of customers first.'],
+  },
+  C: {
+    solo: ['Write your brand voice document — 1-2 pages on how you sound, how you don\'t sound, words you use and avoid. Paste this at the top of every AI content prompt.','Stop writing first drafts. Every piece of content starts with an AI draft. Your job is to direct, edit, and inject your perspective.','Pick one content format and build a repeatable AI-assisted production system around it.'],
+    service: ['Audit your current content output. If the answer is "not enough," AI removes the friction that stops you from publishing.','Build a case study production system using AI to turn a 15-minute client interview into a full draft.','For paid ads: go from 2-3 ad versions to 10. AI writes the copy, you handle the visual, data picks the winner.'],
+    saas: ['Your biggest Create opportunity is probably SEO content at scale. Use AI to identify gaps, generate briefs, and draft articles.','Build an AI-assisted email sequence system for onboarding, re-engagement, and product updates.','Separate copy testing from visual testing. AI handles copy variation at scale. Humans handle visual direction.'],
+    midmarket: ['Consolidate your brand voice into a document that every department and AI tool uses.','Identify your highest-volume content operation and build an AI-first production workflow around just that one first.','Set up a content performance feedback loop: AI generates, humans publish, data feeds back into future prompts.'],
+  },
+};
+
+let companyType = null;
+let scores = { B:[0,0,0,0,0,0], A:[0,0,0,0,0,0], D:[0,0,0,0,0,0], I:[0,0,0,0,0,0], C:[0,0,0,0,0,0] };
+let answeredCount = 0;
+
+function selectCompany(el) {
+  document.querySelectorAll('.company-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  companyType = el.dataset.type;
+  document.getElementById('startBtn').disabled = false;
+}
+
+function startAudit() {
+  if (!companyType) return;
+  buildQuestionScreen();
+  showScreen('screen-questions');
+  document.getElementById('progressWrap').style.display = 'block';
+  updateProgress();
+}
+
+function buildQuestionScreen() {
+  const container = document.getElementById('screen-questions');
+  container.innerHTML = '';
+  BUCKETS.forEach((bucket, bIdx) => {
+    const section = document.createElement('div');
+    section.id = `bucket-section-${bIdx}`;
+    section.style.display = bIdx === 0 ? 'block' : 'none';
+    const dot = `<div class="bucket-dot" style="background:${bucket.color}"></div>`;
+    section.innerHTML = `
+      <div class="bucket-header">${dot}<div><h2>${bucket.key} — ${bucket.label}</h2><div class="bucket-sub">${bucket.sub}</div></div></div>
+      <div class="bucket-note">${bucket.note}</div>
+      <div id="questions-${bIdx}"></div>
+      <div class="nav-btns">
+        ${bIdx > 0 ? `<button class="btn btn-outline" onclick="prevBucket(${bIdx})">Back</button>` : '<span></span>'}
+        <span class="bucket-score-mini" id="bucket-score-${bIdx}">0 / 30</span>
+        <button class="btn" id="next-btn-${bIdx}" onclick="nextBucket(${bIdx})" disabled>${bIdx < BUCKETS.length - 1 ? 'Next section &rarr;' : 'See my results &rarr;'}</button>
+      </div>`;
+    const qContainer = section.querySelector(`#questions-${bIdx}`);
+    bucket.questions.forEach((q, qIdx) => {
+      const card = document.createElement('div');
+      card.className = 'question-card';
+      card.innerHTML = `<div class="q-text">${q}</div><div class="scale-row"><span class="scale-label">Not at all</span><div class="scale-btns" id="scale-${bIdx}-${qIdx}">${[1,2,3,4,5].map(v=>`<button class="scale-btn" onclick="selectScore(${bIdx},${qIdx},${v},this)">${v}</button>`).join('')}</div><span class="scale-label right">Fully in place</span></div>`;
+      qContainer.appendChild(card);
+    });
+    container.appendChild(section);
+  });
+}
+
+function selectScore(bIdx, qIdx, val, btn) {
+  const bucket = BUCKETS[bIdx];
+  scores[bucket.key][qIdx] = val;
+  document.getElementById(`scale-${bIdx}-${qIdx}`).querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById(`next-btn-${bIdx}`).disabled = !scores[bucket.key].every(s => s > 0);
+  document.getElementById(`bucket-score-${bIdx}`).textContent = `${scores[bucket.key].reduce((a,b)=>a+b,0)} / 30`;
+  answeredCount = Object.values(scores).flat().filter(s => s > 0).length;
+  updateProgress();
+}
+
+function nextBucket(bIdx) {
+  if (bIdx < BUCKETS.length - 1) {
+    document.getElementById(`bucket-section-${bIdx}`).style.display = 'none';
+    document.getElementById(`bucket-section-${bIdx+1}`).style.display = 'block';
+    window.scrollTo(0,0);
+  } else {
+    showScreen('screen-gate');
+    document.getElementById('progressWrap').style.display = 'none';
+  }
+}
+
+function prevBucket(bIdx) {
+  document.getElementById(`bucket-section-${bIdx}`).style.display = 'none';
+  document.getElementById(`bucket-section-${bIdx-1}`).style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+function updateProgress() {
+  const pct = (answeredCount/30)*100;
+  document.getElementById('progressFill').style.width = pct+'%';
+  document.getElementById('progressLabel').textContent = `${answeredCount} / 30`;
+}
+
+async function submitEmail() {
+  const email = document.getElementById('emailInput').value.trim();
+  if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
+  document.getElementById('submittingMsg').style.display = 'block';
+  const totals = {};
+  BUCKETS.forEach(b => { totals[b.key] = scores[b.key].reduce((a,c)=>a+c,0); });
+  try {
+    await fetch(SHEETS_WEBHOOK, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ email, companyType, timestamp: new Date().toISOString(), scores: totals }) });
+  } catch(e) { console.warn('Webhook error:', e); }
+  showResults(totals);
+}
+
+function showResults(totals) {
+  document.getElementById('badicBars').innerHTML = BUCKETS.map(b => {
+    const score = totals[b.key];
+    const pct = (score/30)*100;
+    return `<div class="bar-row"><span class="bar-label" style="color:${b.color}">${b.key} — ${b.label}</span><div class="bar-track"><div class="bar-fill" style="background:${b.color};width:${pct}%"></div></div><span class="bar-score">${score}/30</span></div>`;
+  }).join('');
+  const sorted = [...BUCKETS].sort((a,b) => totals[a.key]-totals[b.key]);
+  const unlock = sorted[0];
+  document.getElementById('unlockCard').innerHTML = `<div class="unlock-card" style="background:${unlock.color};color:#fff"><div class="unlock-tag">Your biggest unlock</div><h3>${unlock.key} — ${unlock.label}</h3><p>${BUCKET_DESCRIPTIONS[unlock.key]}</p><p style="margin-top:10px;font-size:0.85rem;opacity:0.75">Score: ${totals[unlock.key]} / 30</p></div>`;
+  const moves = FIRST_MOVES[unlock.key][companyType];
+  document.getElementById('firstMovesSection').innerHTML = `<div class="first-moves"><h3>Your first 3 moves in ${unlock.label}</h3>${moves.map((m,i)=>`<div class="move-item"><div class="move-num">${i+1}</div><div class="move-text">${m}</div></div>`).join('')}</div><div style="font-size:0.82rem;color:var(--muted);margin:16px 0;line-height:1.8;text-align:center"><strong>Score guide:</strong> 25-30 = solid &nbsp;|&nbsp; 15-24 = partial adoption &nbsp;|&nbsp; 6-14 = early stages &nbsp;|&nbsp; Under 6 = not started</div>`;
+  showScreen('screen-results');
+  window.scrollTo(0,0);
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+</script>
+</body>
+</html>
