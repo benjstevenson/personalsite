@@ -97,6 +97,16 @@
     .move-num { width: 28px; height: 28px; border-radius: 50%; background: var(--brown); color: #fff; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
     .move-text { font-size: 0.92rem; color: #444; line-height: 1.6; }
     .results-footer { text-align: center; margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+    .notion-nudge { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 20px 24px; margin: 0 0 28px; display: flex; align-items: flex-start; gap: 16px; }
+    .notion-nudge .nudge-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+    .notion-nudge .nudge-body { flex: 1; }
+    .notion-nudge .nudge-body strong { display: block; font-size: 0.95rem; color: var(--text); margin-bottom: 4px; }
+    .notion-nudge .nudge-body p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; margin: 0 0 12px; }
+    .nudge-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .nudge-link { display: inline-block; font-size: 0.85rem; font-weight: 600; color: var(--brown); border: 1.5px solid var(--brown); border-radius: 7px; padding: 7px 14px; text-decoration: none; transition: background 0.15s, color 0.15s; }
+    .nudge-link:hover { background: var(--brown); color: #fff; text-decoration: none; }
+    .nudge-link.ghost { color: var(--muted); border-color: var(--border); }
+    .nudge-link.ghost:hover { background: var(--border); color: var(--text); }
     @media (max-width: 500px) {
       .company-select-grid { grid-template-columns: 1fr; }
       .intro-hero h1 { font-size: 1.8rem; }
@@ -181,6 +191,17 @@
     <div class="results-hero">
       <h2>Your BADIC Profile</h2>
       <p>Here's where you stand across the five buckets.</p>
+    </div>
+    <div class="notion-nudge">
+      <div class="nudge-icon">📖</div>
+      <div class="nudge-body">
+        <strong>Want to go deeper?</strong>
+        <p>The full BADIC framework lives in a Notion doc — with more context on each bucket, examples, and ways to think through your next moves. Also handy if you'd rather browse than take a quiz.</p>
+        <div class="nudge-actions">
+          <a class="nudge-link" href="https://www.notion.so/benstevenson/The-AI-Application-Audit-351be0f4c24f81bc8932fbca3f4072f5" target="_blank" rel="noopener">Read the full framework &rarr;</a>
+          <a class="nudge-link ghost" href="#" onclick="retakeAudit(); return false;">Retake the audit</a>
+        </div>
+      </div>
     </div>
     <div class="badic-bars" id="badicBars"></div>
     <div id="unlockCard"></div>
@@ -349,6 +370,19 @@ function showResults(totals) {
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+}
+
+function retakeAudit() {
+  companyType = null;
+  scores = { B:[0,0,0,0,0,0], A:[0,0,0,0,0,0], D:[0,0,0,0,0,0], I:[0,0,0,0,0,0], C:[0,0,0,0,0,0] };
+  answeredCount = 0;
+  document.getElementById('startBtn').disabled = true;
+  document.querySelectorAll('.company-option').forEach(o => o.classList.remove('selected'));
+  document.getElementById('emailInput').value = '';
+  document.getElementById('submittingMsg').style.display = 'none';
+  document.getElementById('progressWrap').style.display = 'none';
+  showScreen('screen-intro');
+  window.scrollTo(0, 0);
 }
 </script>
 </body>
