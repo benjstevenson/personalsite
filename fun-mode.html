@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fun Mode — Ben Stevenson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<script defer src="/_vercel/insights/script.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Instrument Serif', serif;
+    background: #000;
+  }
+
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: #000;
+  }
+
+  /* VIDEO LAYER */
+  .video-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .video-layer video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1000ms ease-in-out;
+  }
+
+  .video-layer video.active {
+    opacity: 1;
+  }
+
+  /* LIQUID GLASS */
+  .liquid-glass {
+    background: rgba(255, 255, 255, 0.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%,
+      rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+      rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* CONTENT LAYER */
+  .content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.25rem 1.5rem;
+  }
+
+  /* NAV */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    color: #fff;
+    font-style: italic;
+    font-size: 1.4rem;
+  }
+
+  /* HERO CONTENT */
+  .hero-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 1rem;
+    transition: color 700ms;
+  }
+
+  .badge {
+    border-radius: 999px;
+    padding: 0.5rem 1.25rem;
+    font-family: system-ui, sans-serif;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 1.5rem;
+    transition: color 700ms;
+  }
+
+  .heading {
+    color: #fff;
+    font-size: 2.5rem;
+    line-height: 1.1;
+    max-width: 40rem;
+    margin: 0 0 1.25rem;
+    transition: color 700ms;
+  }
+
+  .subtext {
+    font-family: system-ui, sans-serif;
+    color: rgba(255,255,255,0.85);
+    max-width: 32rem;
+    line-height: 1.6;
+    font-size: 1rem;
+    margin: 0 0 2rem;
+    transition: color 700ms;
+  }
+
+  .exit-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .exit-caption {
+    font-family: system-ui, sans-serif;
+    font-style: italic;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.85rem;
+    transition: color 700ms;
+  }
+
+  .exit-cta-btn {
+    background: #fff;
+    color: #111;
+    border: none;
+    border-radius: 999px;
+    padding: 0.8rem 1.75rem;
+    font-family: system-ui, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  /* dark mode variant for Deep Woods */
+  .hero-content.dark-variant,
+  .hero-content.dark-variant .badge,
+  .hero-content.dark-variant .heading,
+  .hero-content.dark-variant .subtext,
+  .hero-content.dark-variant .exit-caption {
+    color: #182C41;
+  }
+
+  /* VIDEO SWITCHER */
+  .switcher {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .switcher button {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: rgba(255,255,255,0.5);
+    font-family: system-ui, sans-serif;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.1rem;
+    cursor: pointer;
+    transition: opacity 0.3s, color 0.3s, border-color 0.3s;
+  }
+
+  .switcher button:hover { opacity: 0.8; }
+
+  .switcher button.active {
+    color: #fff;
+    border-color: #fff;
+    opacity: 1;
+  }
+
+  .hero-content.dark-variant .switcher button {
+    color: rgba(24,44,65,0.5);
+  }
+
+  .hero-content.dark-variant .switcher button.active {
+    color: #182C41;
+    border-color: #182C41;
+  }
+
+  @media (max-width: 640px) {
+    .heading { font-size: 2rem; }
+  }
+
+  @media (min-width: 640px) {
+    .heading { font-size: 3.25rem; }
+  }
+
+  @media (min-width: 768px) {
+    .heading { font-size: 4rem; }
+  }
+
+  @media (min-width: 1024px) {
+    .heading { font-size: 5rem; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+
+  <div class="video-layer" id="video-layer">
+    <video class="active" autoplay muted loop playsinline src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260702_081127_0992a171-d3c6-4978-8213-0ec5df8b6d63.mp4"></video>
+    <video autoplay muted loop playsinline src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260702_092026_dd05b805-ea0f-40b2-8c52-332b88502592.mp4"></video>
+    <video autoplay muted loop playsinline src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260702_081042_df7202bf-bd80-4b2b-bbc6-1f09ba2870e9.mp4"></video>
+    <video autoplay muted loop playsinline src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260702_080959_4cac5234-3573-464e-a5b7-76b94b8a7d61.mp4"></video>
+  </div>
+
+  <div class="content">
+
+    <nav class="nav">
+      <div class="logo">Ben Stevenson</div>
+    </nav>
+
+    <div class="hero-content" id="hero-content">
+      <div class="badge liquid-glass">&ldquo;Do not mistake my simplicity for weakness.&rdquo; — Al Capone (paraphrased)</div>
+
+      <h1 class="heading"><em>I Believe</em><br>In Simplicity</h1>
+
+      <p class="subtext">One, because of taste. Two, because it often converts better. That's why my personal website is simple. That being said, as Steven Pressfield would say, "Every once in a while, you gotta throw down a 360 tomahawk jam, just to show the boys you're still in business."</p>
+
+      <div class="exit-cta">
+        <a class="exit-cta-btn" id="back-to-simple-link" href="index.html">Back to the Site</a>
+        <div class="exit-caption">So if you wished my website was more fun — now it is.</div>
+      </div>
+
+      <div class="switcher" id="switcher">
+        <button class="active" data-index="0">click this</button>
+        <button data-index="1">a second thing to click</button>
+        <button data-index="2">another thing to click</button>
+        <button data-index="3">no, but click this really</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const ALLOWED_RETURN_PAGES = [
+    'index.html', 'about.html', 'contact.html', 'essays.html',
+    'forfun.html', 'quotes.html', 'services.html', 'story.html', 'work.html'
+  ];
+  const requestedFrom = new URLSearchParams(window.location.search).get('from');
+  const returnPage = ALLOWED_RETURN_PAGES.includes(requestedFrom) ? requestedFrom : 'index.html';
+  document.getElementById('back-to-simple-link').href = returnPage;
+
+  const videos = document.querySelectorAll('#video-layer video');
+  const buttons = document.querySelectorAll('#switcher button');
+  const heroContent = document.getElementById('hero-content');
+  let activeVideo = 0;
+  let isTransitioning = false;
+
+  function setActive(index) {
+    if (index === activeVideo || isTransitioning) return;
+    isTransitioning = true;
+
+    videos[activeVideo].classList.remove('active');
+    videos[index].classList.add('active');
+    buttons[activeVideo].classList.remove('active');
+    buttons[index].classList.add('active');
+
+    heroContent.classList.toggle('dark-variant', index === 2);
+
+    activeVideo = index;
+    setTimeout(() => { isTransitioning = false; }, 1000);
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => setActive(Number(btn.dataset.index)));
+  });
+
+  videos.forEach((v) => {
+    const tryPlay = () => v.play().catch(() => {});
+    tryPlay();
+    v.addEventListener('canplay', tryPlay);
+  });
+  document.addEventListener('click', () => videos.forEach((v) => v.play().catch(() => {})), { once: true });
+</script>
+
+</body>
+</html>

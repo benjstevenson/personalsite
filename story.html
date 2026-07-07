@@ -6,8 +6,16 @@
   <title>My Story — Ben Stevenson</title>
   <link rel="stylesheet" href="styles.css">
   <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="fun-toggle.js"></script>
 </head>
 <body>
+  <div class="fun-toggle-wrap">
+    <span class="fun-toggle-label" id="fun-toggle-label">Fun Mode</span>
+    <button class="fun-toggle" id="fun-toggle-btn" type="button" role="switch" aria-checked="false" aria-label="Toggle Fun Mode" data-target="fun-mode.html?from=story.html">
+      <span class="fun-toggle-knob"></span>
+    </button>
+  </div>
+
 
     <nav class="sitenav">
     <a href="index.html">Home</a>
