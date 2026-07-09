@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Story — Ben Stevenson</title>
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="/_vercel/insights/script.js"></script>
-  <script defer src="fun-toggle.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Story — Ben Stevenson (Fun Mode)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fun.css">
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="fun.js"></script>
 </head>
 <body>
-  <div class="fun-toggle-wrap">
-    <span class="fun-toggle-label" id="fun-toggle-label">Fun Mode</span>
-    <button class="fun-toggle" id="fun-toggle-btn" type="button" role="switch" aria-checked="false" aria-label="Toggle Fun Mode" data-target="fun/story.html">
-      <span class="fun-toggle-knob"></span>
-    </button>
-  </div>
 
+<div class="fun-toggle-wrap">
+  <span class="fun-toggle-label" id="fun-toggle-label">Fun Mode</span>
+  <button class="fun-toggle is-on" id="fun-toggle-btn" type="button" role="switch" aria-checked="true" aria-label="Toggle Fun Mode" data-target="../story.html">
+    <span class="fun-toggle-knob"></span>
+  </button>
+</div>
 
-    <nav class="sitenav">
-    <a href="index.html">Home</a>
-    <a href="work.html">My Work</a>
-    <a href="quotes.html">Quotes</a>
-    <a href="story.html">My Story</a>
-    <a href="contact.html">Contact</a>  </nav>
+<nav class="fun-nav" data-fade style="--fy: -20px;">
+  <a href="index.html">Home</a>
+  <a href="work.html">Work</a>
+  <a href="quotes.html">Quotes</a>
+  <a href="story.html" class="active">Story</a>
+  <a href="contact.html">Contact</a>
+</nav>
 
+<main class="subpage-main">
+  <h1 class="section-heading hero-heading display" data-fade style="--fy: 40px;">My Story</h1>
 
-  <main>
-    <h1>My Story</h1>
-
+  <div class="story-flow">
     <p>I grew up in a small suburb in the midwest. I had a park right across the street and kids my age who soon became best friends. In many ways, it was an awesome childhood.</p>
     <p>At age 9 my mom brought home a video camera from work. I started creating little edits of me and my friends. I fell in love with it.</p>
     <p>In early high school I wanted to be an engineer. I always got magazines like Popular Science from the library. Taught myself some no-code coding tools like Scratch. Went to engineering summer camp. You know the drill.</p>
     <p>As I got a bit older I realized that while engineering was cool, I liked business more. I like psychology, marketing, branding, and strategy. So I went to school for Marketing + Business Analytics. Graduated top of my class with a 4.0 GPA. I feel stupid writing that, but I guess I'm supposed to say that so people think I'm smart?</p>
-
     <p>During my Junior year, COVID hit. Doing school from home sucked and I figured it was a waste of money, so I took a gap semester and bought a one way ticket to Costa Rica. Met some amazing people (and some insane people, like the guy who thought Louis Pasteur was totally wrong about germ theory, and that 5G was causing covid). It also made me fall in love with travel.</p>
     <p>My favorite way to travel is going somewhere where you learn something that place specializes in (basically combine skill acquisition with travel). Like studying Buddhism in Chiang Mai, Thailand. Or learning Salsa/Bachata when in Latin America. Or grinding Muay Thai in Bangkok. Or reading the great works of philosophy in Greece.</p>
     <p>Through it all, I kept making content. It started with my personal channel, trying successful people's daily routines. During that covid gap semester I started making shortform content. In 2022 I had my first major viral video, trying Jordan Peterson's daily routine. People loved it. I got invited on podcasts. It was a nice win, but mainly came because I'd been honing my craft.</p>
-
     <p>During college I interned at a bunch of startups. At the first one, the company didn't do so well (so it goes in the startup world), but it was started by an ex-Bain consultant who was an incredibly talented project manager and leader. I learned an insane amount about running a company and managing a team from her.</p>
     <p>Another was a YC company that grew a bunch during COVID. Learned a bunch about sales and customer acquisition. We signed some really big clients while I was there.</p>
     <p>I also worked at a VC-firm. The school I went to (University of Minnesota) has what I believe was the first student-run VC firm in the world. Not play money or a made up class, but the real deal. We raised money from LPs and invested it on their behalf. Learned many things, not least of which is what investors care about in a startup. And how bad most pitch decks are.</p>
@@ -49,11 +51,15 @@
       <li>Traveled and worked remotely for a stretch in Europe</li>
       <li>Helped launch the B2B program</li>
     </ul>
-
     <p>Austin's a great place. Met lots of great people there all building cool stuff. Definitely caught the AI bug. Meaning I kept seeing people building incredible things with AI and I figured "I have to become an expert at that". So I started to, and continue to.</p>
     <p>The last few months have been awesome, but I'm not sure how they fit into the story yet, so I won't tell you about them right now. A story for another day, perhaps.</p>
-  </main>
+  </div>
+</main>
 
+<footer class="fun-footer">
+  <h2 class="footer-heading hero-heading display" data-fade style="--fy: 40px;">Let&rsquo;s talk</h2>
+  <a class="contact-btn" href="mailto:bsteve731@gmail.com">Contact Me</a>
+</footer>
 
 </body>
 </html>
