@@ -77,9 +77,10 @@
     el.appendChild(frag);
   });
 
-  const revealBlocks = [...charTargets, ...wordTargets].map((el) => ({
+  /* Short blocks (about page): per-block character sweep */
+  const revealBlocks = [...charTargets].map((el) => ({
     el,
-    spans: el.querySelectorAll('.ch, .w'),
+    spans: el.querySelectorAll('.ch'),
   })).filter((b) => b.spans.length);
 
   if (revealBlocks.length) {
@@ -103,8 +104,7 @@
           const n = b.spans.length;
           b.spans.forEach((s, i) => {
             const local = Math.min(Math.max(p * n - i, 0), 1);
-            const base = s.classList.contains('w') ? 0.15 : 0.2;
-            s.style.opacity = String(base + (1 - base) * local);
+            s.style.opacity = String(0.2 + 0.8 * local);
           });
         });
       };
@@ -112,6 +112,51 @@
         if (!rTicking) { rTicking = true; requestAnimationFrame(updateReveal); }
       }, { passive: true });
       updateReveal();
+    }
+  }
+
+  /* Story page: ONE reveal across the whole story. Every word brightens as
+     it crosses a fixed line (~68% down the viewport), so the text lights up
+     line by line regardless of paragraph breaks. */
+  const storyWords = [...document.querySelectorAll('.story-flow .w')];
+  if (storyWords.length) {
+    if (reduceMotion) {
+      storyWords.forEach((s) => { s.style.opacity = '1'; });
+    } else {
+      // Cache each word's document-space Y once (and again on resize/font load)
+      let wordTops = [];
+      const cachePositions = () => {
+        const scrollY = window.scrollY;
+        wordTops = storyWords.map((s) => s.getBoundingClientRect().top + scrollY);
+      };
+
+      const RAMP = 120; // px past the trigger line over which a word fades in
+      let lastApplied = [];
+      const updateStory = () => {
+        wTicking = false;
+        const triggerY = window.scrollY + window.innerHeight * 0.68;
+        storyWords.forEach((s, i) => {
+          const o = Math.min(Math.max((triggerY - wordTops[i]) / RAMP, 0), 1);
+          const val = (0.15 + 0.85 * o).toFixed(3);
+          if (lastApplied[i] !== val) {
+            lastApplied[i] = val;
+            s.style.opacity = val;
+          }
+        });
+      };
+
+      let wTicking = false;
+      const requestStoryUpdate = () => {
+        if (!wTicking) { wTicking = true; requestAnimationFrame(updateStory); }
+      };
+
+      cachePositions();
+      updateStory();
+      window.addEventListener('scroll', requestStoryUpdate, { passive: true });
+      window.addEventListener('resize', () => { cachePositions(); requestStoryUpdate(); }, { passive: true });
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => { cachePositions(); requestStoryUpdate(); });
+      }
     }
   }
 

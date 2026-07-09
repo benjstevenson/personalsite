@@ -498,7 +498,18 @@ a {
 }
 
 .projects-section .section-heading {
-  margin-bottom: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.projects-sub {
+  font-weight: 300;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--ink-dim);
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  max-width: 40rem;
+  margin: 0 auto 4rem;
+  padding: 0 1rem;
 }
 
 .stack-wrap {
@@ -651,10 +662,22 @@ a {
 
 .also-item .also-desc {
   font-weight: 300;
+  line-height: 1.55;
   font-size: clamp(0.75rem, 1.2vw, 1rem);
   color: var(--ink-dim);
   text-align: right;
-  max-width: 24rem;
+  max-width: 34rem;
+}
+
+@media (max-width: 640px) {
+  .also-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+  .also-item .also-desc {
+    text-align: left;
+  }
 }
 
 /* ---------- FOOTER / CTA ---------- */
