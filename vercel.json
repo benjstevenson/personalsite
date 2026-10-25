@@ -1,0 +1,28 @@
+{
+  "rewrites": [
+    { "source": "/links", "destination": "/clickthis/index.html" },
+    { "source": "/links/", "destination": "/clickthis/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/clickthis",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+    },
+    {
+      "source": "/clickthis/",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+    },
+    {
+      "source": "/clickthis/index.html",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+    },
+    {
+      "source": "/links",
+      "headers": [{ "key": "Link", "value": "<https://www.benstevenson.io/links>; rel=\"canonical\"" }]
+    },
+    {
+      "source": "/links/",
+      "headers": [{ "key": "Link", "value": "<https://www.benstevenson.io/links>; rel=\"canonical\"" }]
+    }
+  ]
+}
