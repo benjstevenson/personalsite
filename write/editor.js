@@ -19,6 +19,7 @@
   }
 
   // ---------- state ----------
+  let hours = 3;           // timer length: picked before starting, then locked
   let deadline = null;     // server epoch ms, set once and never changed
   let offset = 0;          // serverNow - clientNow
   let clockTimer = null;
@@ -34,10 +35,33 @@
   // ---------- countdown ----------
   const pad = (n) => String(n).padStart(2, '0');
 
-  function syncClock(serverNow, dl) {
+  const picker = $('picker');
+
+  function renderPicker() {
+    picker.querySelectorAll('.pick').forEach((b) => b.setAttribute('aria-checked', String(Number(b.dataset.h) === hours)));
+  }
+
+  // Before the clock starts, the display shows the length you've chosen.
+  function renderIdle() {
+    if (deadline !== null) return;
+    $('clock').firstChild.nodeValue = `${hours}:00:00`;
+    $('clock-note').textContent = 'Starts when you type';
+  }
+
+  picker.addEventListener('click', (e) => {
+    const b = e.target.closest('.pick');
+    if (!b || deadline !== null) return; // locked once the clock is running
+    hours = Number(b.dataset.h);
+    renderPicker();
+    renderIdle();
+  });
+
+  function syncClock(serverNow, dl, serverHours) {
     if (typeof serverNow === 'number') offset = serverNow - Date.now();
     if (dl && deadline === null) {
       deadline = dl;
+      if (serverHours) hours = serverHours;
+      picker.hidden = true;
       clockTimer = setInterval(tick, 250);
       tick();
     }
@@ -52,7 +76,7 @@
     const s = total % 60;
     const clock = $('clock');
     clock.firstChild.nodeValue = `${h}:${pad(m)}:${pad(s)}`;
-    $('clock-note').textContent = 'Time left';
+    $('clock-note').textContent = `${hours}-hour timer`;
     clock.classList.toggle('warn', left <= 30 * 60 * 1000 && left > 10 * 60 * 1000);
     clock.classList.toggle('danger', left <= 10 * 60 * 1000);
   }
@@ -110,7 +134,7 @@
     clearTimeout(saveTimer);
     return enqueue(async () => {
       if (!dirty || locked) return;
-      const body = JSON.stringify({ title: titleEl.value, html: currentHTML() });
+      const body = JSON.stringify({ title: titleEl.value, html: currentHTML(), hours });
       dirty = false;
       firstDirtyAt = 0;
       setStatus('Saving…');
@@ -120,7 +144,7 @@
         if (r.status === 401) return location.reload();
         if (!r.ok) throw new Error(r.data.error || 'Save failed');
         if (r.data.draft) {
-          syncClock(r.data.now, r.data.draft.deadline);
+          syncClock(r.data.now, r.data.draft.deadline, r.data.draft.hours);
           setStatus('Saved');
         } else {
           setStatus('');
@@ -144,7 +168,7 @@
         keepalive: true,
         credentials: 'same-origin',
         headers: { 'X-Requested-With': 'write', ...JSON_HEADERS },
-        body: JSON.stringify({ title: titleEl.value, html: currentHTML() }),
+        body: JSON.stringify({ title: titleEl.value, html: currentHTML(), hours }),
       }).catch(() => {});
     }
   });
@@ -274,11 +298,11 @@
     try {
       const blob = await prepareImage(file);
       const r = await enqueue(() =>
-        api('/api/write/image', { method: 'POST', headers: { 'Content-Type': blob.type }, body: blob }),
+        api('/api/write/image', { method: 'POST', headers: { 'Content-Type': blob.type, 'X-Duration-Hours': String(hours) }, body: blob }),
       );
       if (r.status === 410) return timeUp();
       if (!r.ok) throw new Error(r.data.error || 'Upload failed');
-      syncClock(r.data.now, r.data.deadline);
+      syncClock(r.data.now, r.data.deadline, r.data.hours);
 
       editor.focus();
       const s = getSelection();
@@ -356,7 +380,10 @@
     if (s.draft) {
       titleEl.value = s.draft.title || '';
       editor.innerHTML = s.draft.html || '';
-      syncClock(s.now, s.draft.deadline);
+      syncClock(s.now, s.draft.deadline, s.draft.hours);
+    } else {
+      renderPicker();
+      renderIdle();
     }
     (s.draft && s.draft.title ? editor : titleEl).focus();
   }

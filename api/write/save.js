@@ -7,7 +7,7 @@ export default wrap(async function handler(req, res) {
   if (!guard(req, res, { mutating: true })) return;
 
   const body = await readJSON(req);
-  const result = await saveDraft({ title: body.title, html: body.html });
+  const result = await saveDraft({ title: body.title, html: body.html, hours: body.hours });
   if (result.expired) return json(res, 410, { expired: true, error: "Time's up. The draft was deleted." });
   json(res, 200, { now: Date.now(), draft: publicDraft(result.draft) });
 });

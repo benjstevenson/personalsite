@@ -22,10 +22,10 @@ export default wrap(async function handler(req, res) {
   if (!kind) return json(res, 415, { error: 'That file is not a supported image (JPEG, PNG, GIF or WebP).' });
 
   // Dropping in an image counts as starting to write, so it starts the clock too.
-  const { draft, expired } = await ensureDraft();
+  const { draft, expired } = await ensureDraft({ hours: req.headers['x-duration-hours'] });
   if (expired) return json(res, 410, { expired: true, error: "Time's up. The draft was deleted." });
 
   const name = `${draft.id}-${crypto.randomBytes(8).toString('hex')}.${kind.ext}`;
   await writeBuffer(`img/${name}`, buf, kind.type);
-  json(res, 200, { url: `/img/${name}`, now: Date.now(), deadline: draft.deadline, startedAt: draft.startedAt });
+  json(res, 200, { url: `/img/${name}`, now: Date.now(), deadline: draft.deadline, startedAt: draft.startedAt, hours: draft.hours });
 });
