@@ -62,31 +62,65 @@
       gap: 0.75rem;
     }
 
-    .links a {
+    .card {
       display: block;
-      padding: 0.95rem 1.25rem;
+      padding: 1rem 1.25rem 1.05rem;
       border: 1px solid #ddd;
-      border-radius: 999px;
+      border-radius: 20px;
       background: #fff;
       color: #111;
+      text-align: left;
       text-decoration: none;
-      font-size: 1rem;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background 0.15s;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
     }
 
-    .links a:hover,
-    .links a:focus-visible {
+    .card:hover,
+    .card:focus-visible {
       transform: translateY(-2px);
       border-color: #111;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
       outline: none;
     }
 
-    .links a.primary {
+    .row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .name { font-size: 1.05rem; }
+
+    .count {
+      flex: none;
+      font-size: 0.78rem;
+      color: #888;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .desc {
+      display: block;
+      margin-top: 0.3rem;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: #777;
+      text-wrap: pretty;
+    }
+
+    .card.primary {
       background: #111;
       border-color: #111;
       color: #fff;
+    }
+
+    .card.primary .desc { color: rgba(255, 255, 255, 0.65); }
+
+    .card.primary:hover,
+    .card.primary:focus-visible {
+      border-color: #111;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
     }
 
     .links li { animation: rise 0.5s ease-out both; }
@@ -115,7 +149,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       .avatar, .links li { animation: none; }
-      .links a { transition: none; }
+      .card { transition: none; }
     }
   </style>
 </head>
@@ -130,13 +164,13 @@
     </p>
 
     <ul class="links">
-      <li><a class="primary" href="https://www.sciencebased.ai" target="_blank" rel="noopener">Science Based AI</a></li>
-      <li><a href="mailto:bsteve731@gmail.com">Contact</a></li>
-      <li><a href="https://www.youtube.com/@awarriorphilosophy" target="_blank" rel="noopener">Warrior Philosophy</a></li>
-      <li><a href="https://www.youtube.com/@Ben.Stevenson" target="_blank" rel="noopener">Personal YouTube</a></li>
-      <li><a href="https://www.tiktok.com/@sciencebasedgrowth" target="_blank" rel="noopener">TikTok</a></li>
-      <li><a href="https://www.instagram.com/thatbenstevenson/" target="_blank" rel="noopener">Instagram</a></li>
-      <li><a href="https://x.com/thebenstevenson" target="_blank" rel="noopener">Twitter</a></li>
+      <li><a class="card primary" href="mailto:bsteve731@gmail.com"><span class="row"><span class="name">Contact</span></span><span class="desc">Collabs, questions, or just a hello. Send me an email.</span></a></li>
+      <li><a class="card" href="https://www.sciencebased.ai" target="_blank" rel="noopener"><span class="row"><span class="name">Science Based AI</span><span class="count">8.9k followers</span></span><span class="desc">AI use cases that actually replicate. Every workflow links to its source, no hype.</span></a></li>
+      <li><a class="card" href="https://www.youtube.com/@awarriorphilosophy" target="_blank" rel="noopener"><span class="row"><span class="name">Warrior Philosophy</span><span class="count">45.6k followers</span></span><span class="desc">Lessons from history&rsquo;s greatest warriors and martial artists, broken down for modern life.</span></a></li>
+      <li><a class="card" href="https://www.youtube.com/@Ben.Stevenson" target="_blank" rel="noopener"><span class="row"><span class="name">Personal YouTube</span><span class="count">16.2k followers</span></span><span class="desc">I try the daily routines of people like Jordan Peterson and Lex Fridman for a week, then report back.</span></a></li>
+      <li><a class="card" href="https://www.tiktok.com/@sciencebasedgrowth" target="_blank" rel="noopener"><span class="row"><span class="name">TikTok</span><span class="count">92.1k followers</span></span><span class="desc">Aesthetic short videos on productivity and self improvement to make you smarter, happier, and more interesting.</span></a></li>
+      <li><a class="card" href="https://www.instagram.com/thatbenstevenson/" target="_blank" rel="noopener"><span class="row"><span class="name">Instagram</span></span><span class="desc">Photos from the adventure side of life.</span></a></li>
+      <li><a class="card" href="https://x.com/thebenstevenson" target="_blank" rel="noopener"><span class="row"><span class="name">Twitter</span></span><span class="desc">Thoughts on marketing, AI, and building things.</span></a></li>
     </ul>
 
     <a class="home" href="/">benstevenson.io</a>
