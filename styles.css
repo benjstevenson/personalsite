@@ -45,7 +45,7 @@ main {
   font-weight: 500;
 }
 
-/* row of tiny X's under the nav */
+/* row of tiny chevrons under the nav (echoes the > before each link) */
 .sitenav::after {
   content: '';
   position: absolute;
@@ -53,7 +53,7 @@ main {
   right: 1.5rem;
   bottom: 0;
   height: 9px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' shape-rendering='crispEdges' fill='%23b0b7bf'%3E%3Crect x='2' y='2' width='1' height='1'/%3E%3Crect x='6' y='2' width='1' height='1'/%3E%3Crect x='3' y='3' width='1' height='1'/%3E%3Crect x='5' y='3' width='1' height='1'/%3E%3Crect x='4' y='4' width='1' height='1'/%3E%3Crect x='3' y='5' width='1' height='1'/%3E%3Crect x='5' y='5' width='1' height='1'/%3E%3Crect x='2' y='6' width='1' height='1'/%3E%3Crect x='6' y='6' width='1' height='1'/%3E%3C/svg%3E") repeat-x left center;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9'%3E%3Cpath d='M3 2 L6 4.5 L3 7' fill='none' stroke='%23b0b7bf' stroke-width='1'/%3E%3C/svg%3E") repeat-x left center;
 }
 
 .sitenav a {
