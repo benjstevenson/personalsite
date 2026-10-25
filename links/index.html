@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Ben Stevenson — Links</title>
+  <link rel="canonical" href="https://www.benstevenson.io/links">
+  <meta name="description" content="Ben Stevenson's links: Science Based AI, Warrior Philosophy, his YouTube channel, TikTok, Twitter, Instagram, and personal website.">
+  <meta property="og:title" content="Ben Stevenson — Links">
+  <meta property="og:description" content="Videos, AI tutorials, and projects from Ben Stevenson.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.benstevenson.io/links">
+  <meta property="og:image" content="https://www.benstevenson.io/links/avatar.jpg">
+  <script defer src="/_vercel/insights/script.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --ink: #111;
+      --muted: #6b6b66;
+      --line: rgba(17, 17, 17, 0.08);
+      --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(900px 420px at 50% -80px, #ffffff 0%, rgba(255,255,255,0) 70%),
+        #f3f2ee;
+      color: var(--ink);
+      font-family: Georgia, 'Times New Roman', serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 3.5rem max(1.25rem, env(safe-area-inset-right)) calc(4rem + env(safe-area-inset-bottom)) max(1.25rem, env(safe-area-inset-left));
+      text-align: center;
+    }
+
+    /* ---------- header ---------- */
+    .avatar {
+      width: 104px;
+      height: 104px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 1.1rem;
+      box-shadow: 0 0 0 4px #fff, 0 0 0 5px var(--line), 0 14px 34px rgba(0, 0, 0, 0.16);
+      animation: rise 0.6s var(--ease) both;
+    }
+
+    h1 {
+      font-size: 1.2rem;
+      font-weight: normal;
+      letter-spacing: -0.01em;
+      margin: 0 0 0.6rem;
+    }
+
+    .bio {
+      max-width: 25rem;
+      margin: 0 auto 2.1rem;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      text-wrap: balance;
+    }
+
+    .bio a {
+      color: var(--ink);
+      text-decoration: underline;
+      text-decoration-color: rgba(17, 17, 17, 0.28);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .bio a:hover { text-decoration-color: var(--ink); }
+
+    /* ---------- cards ---------- */
+    .links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .card {
+      --mx: 50%;
+      --my: 50%;
+      position: relative;
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      grid-template-areas:
+        "av head go"
+        "av desc go";
+      column-gap: 0.95rem;
+      row-gap: 0.2rem;
+      align-items: center;
+      padding: 0.95rem 1.1rem 0.95rem 0.95rem;
+      border-radius: 22px;
+      background: #fff;
+      color: var(--ink);
+      text-align: left;
+      text-decoration: none;
+      overflow: hidden;
+      isolation: isolate;
+      box-shadow:
+        0 0 0 1px var(--line),
+        0 1px 2px rgba(0, 0, 0, 0.04),
+        0 8px 22px -8px rgba(0, 0, 0, 0.12);
+      transition:
+        transform 0.35s var(--ease),
+        box-shadow 0.35s var(--ease);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    /* cursor-following spotlight */
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: inherit;
+      background: radial-gradient(260px circle at var(--mx) var(--my), rgba(17, 17, 17, 0.06), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      transform: translateY(-3px);
+      box-shadow:
+        0 0 0 1px rgba(17, 17, 17, 0.14),
+        0 2px 4px rgba(0, 0, 0, 0.05),
+        0 18px 36px -12px rgba(0, 0, 0, 0.22);
+      outline: none;
+    }
+
+    .card:hover::before,
+    .card:focus-visible::before { opacity: 1; }
+
+    .card:active {
+      transform: translateY(-1px) scale(0.985);
+      transition-duration: 0.1s;
+    }
+
+    .card:focus-visible { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--ink); }
+
+    .av {
+      grid-area: av;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--line), 0 6px 14px rgba(0, 0, 0, 0.14);
+      transition: transform 0.4s var(--ease);
+    }
+
+    .card:hover .av { transform: scale(1.07) rotate(-2deg); }
+
+    .head {
+      grid-area: head;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.15rem 0.6rem;
+      min-width: 0;
+    }
+
+    .name {
+      font-size: 1.08rem;
+      font-weight: bold;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+
+    .count {
+      flex: none;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(17, 17, 17, 0.05);
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .count b { color: var(--ink); font-weight: 650; }
+
+    .desc {
+      grid-area: desc;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      line-height: 1.45;
+      color: var(--muted);
+      text-wrap: pretty;
+    }
+
+    .go {
+      grid-area: go;
+      width: 18px;
+      height: 18px;
+      color: #b4b4ae;
+      transition: transform 0.35s var(--ease), color 0.25s;
+    }
+
+    .card:hover .go,
+    .card:focus-visible .go {
+      color: var(--ink);
+      transform: translate(3px, -3px);
+    }
+
+    /* ---------- Contact (primary, black) ---------- */
+    .card.primary {
+      background: linear-gradient(180deg, #1d1d1d 0%, #0b0b0b 100%);
+      color: #fff;
+      box-shadow:
+        0 0 0 1px #000,
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        0 12px 28px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .card.primary::before {
+      background: radial-gradient(260px circle at var(--mx) var(--my), rgba(255, 255, 255, 0.13), transparent 70%);
+    }
+
+    .card.primary:hover,
+    .card.primary:focus-visible {
+      box-shadow:
+        0 0 0 1px #000,
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 22px 40px -12px rgba(0, 0, 0, 0.6);
+    }
+
+    .card.primary:focus-visible { box-shadow: 0 0 0 2px #f3f2ee, 0 0 0 4px var(--ink); }
+
+    .card.primary .desc { color: rgba(255, 255, 255, 0.62); }
+    .card.primary .go { color: rgba(255, 255, 255, 0.45); }
+    .card.primary:hover .go,
+    .card.primary:focus-visible .go { color: #fff; }
+
+    .icon {
+      grid-area: av;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+      transition: transform 0.4s var(--ease);
+    }
+
+    .icon svg { width: 24px; height: 24px; }
+    .card.primary:hover .icon { transform: scale(1.07) rotate(-4deg); }
+
+    /* ---------- secondary (no photo) ---------- */
+    .card.compact {
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "head go"
+        "desc go";
+      padding: 0.85rem 1.1rem 0.85rem 1.2rem;
+    }
+
+    .card.compact .name { font-size: 1rem; }
+
+    /* ---------- misc ---------- */
+    .links li { animation: rise 0.6s var(--ease) both; }
+    .links li:nth-child(1) { animation-delay: 0.05s; }
+    .links li:nth-child(2) { animation-delay: 0.10s; }
+    .links li:nth-child(3) { animation-delay: 0.15s; }
+    .links li:nth-child(4) { animation-delay: 0.20s; }
+    .links li:nth-child(5) { animation-delay: 0.25s; }
+    .links li:nth-child(6) { animation-delay: 0.30s; }
+    .links li:nth-child(7) { animation-delay: 0.35s; }
+    .links li:nth-child(8) { animation-delay: 0.40s; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---------- phones (most visitors) ---------- */
+    @media (max-width: 520px) {
+      main {
+        padding: 2rem max(1rem, env(safe-area-inset-right)) calc(2.5rem + env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+      }
+
+      .avatar { width: 88px; height: 88px; margin-bottom: 0.85rem; box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--line), 0 10px 26px rgba(0, 0, 0, 0.16); }
+      h1 { font-size: 1.15rem; margin-bottom: 0.45rem; }
+      .bio { max-width: none; font-size: 0.88rem; line-height: 1.58; margin-bottom: 1.5rem; padding: 0 0.25rem; }
+
+      .links { gap: 0.65rem; }
+
+      .card {
+        grid-template-columns: 48px 1fr;
+        grid-template-areas: "av head" "av desc";
+        column-gap: 0.8rem;
+        row-gap: 0.15rem;
+        padding: 0.85rem 0.9rem;
+        border-radius: 20px;
+        align-items: start;
+      }
+
+      .go { display: none; }
+
+      .av, .icon { width: 48px; height: 48px; margin-top: 0.1rem; }
+      .icon svg { width: 22px; height: 22px; }
+
+      /* consistent stack: title, then follower chip, then blurb */
+      .head { display: block; }
+      .name { display: block; font-size: 1.02rem; line-height: 1.3; }
+      .count { display: block; width: fit-content; margin: 0.28rem 0 0.1rem; font-size: 0.72rem; padding: 0.16rem 0.55rem; }
+      .desc { font-size: 0.84rem; line-height: 1.42; }
+
+      .card.compact { grid-template-columns: 1fr; grid-template-areas: "head" "desc"; padding: 0.8rem 1rem; }
+      .card.compact .name { font-size: 1rem; }
+    }
+
+    /* very small phones */
+    @media (max-width: 360px) {
+      .card { column-gap: 0.65rem; padding: 0.8rem 0.75rem; grid-template-columns: 44px 1fr; }
+      .av, .icon { width: 44px; height: 44px; }
+      .name { font-size: 1rem; }
+      .desc { font-size: 0.82rem; }
+    }
+
+    /* touch screens: no sticky "hover" lift after a tap; press feedback only */
+    @media (hover: none) {
+      .card:hover { transform: none; box-shadow: 0 0 0 1px var(--line), 0 1px 2px rgba(0,0,0,0.04), 0 8px 22px -8px rgba(0,0,0,0.12); }
+      .card.primary:hover { transform: none; box-shadow: 0 0 0 1px #000, inset 0 1px 0 rgba(255,255,255,0.14), 0 12px 28px -10px rgba(0,0,0,0.5); }
+      .card:hover::before { opacity: 0; }
+      .card:hover .av, .card.primary:hover .icon { transform: none; }
+      .card:hover .go { transform: none; }
+      .card:active { transform: scale(0.98); transition-duration: 0.08s; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .avatar, .links li { animation: none; }
+      .card, .av, .icon, .go { transition: none; }
+      .card:hover, .card:active { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <img class="avatar" src="/links/avatar.jpg" alt="Ben Stevenson" width="104" height="104">
+    <h1>Ben Stevenson</h1>
+    <p class="bio">Hey, I&rsquo;m Ben. I make videos and build things around marketing, AI, and self improvement. You can check out some of what I&rsquo;ve done below, and if you&rsquo;re feeling lost, my <a href="/">personal website</a> is a good place to start.</p>
+
+    <ul class="links">
+      <li>
+        <a class="card primary" href="mailto:bsteve731@gmail.com">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7.5 8 5.5 8-5.5"/></svg>
+          </span>
+          <span class="head"><span class="name">Contact</span></span>
+          <span class="desc">Collabs, questions, or just a hello. Send me an email.</span>
+          <svg class="go" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14 14 6M7 6h7v7"/></svg>
+        </a>
+      </li>
+      <li>
+        <a class="card compact" href="https://x.com/thebenstevenson" target="_blank" rel="noopener">
+          <span class="head"><span class="name">Twitter</span></span>
+          <span class="desc">Thoughts on marketing, AI, and building things.</span>
+          <svg class="go" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14 14 6M7 6h7v7"/></svg>
+        </a>
+      </li>
+      <li>
+        <a class="card" href="https://www.sciencebased.ai" target="_blank" rel="noopener">
+          <img class="av" src="/links/av-sbai.jpg" alt="" width="56" height="56">
+          <span class="head"><span class="name">Science Based AI</span><span class="count"><b>8.9k</b> subscribers</span></span>
+          <span class="desc">Teaching AI through clear tutorials, with use cases that actually replicate</span>
+          <svg class="go" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14 14 6M7 6h7v7"/></svg>
+        </a>
+      </li>
+      <li>
+        <a class="card" href="https://www.youtube.com/@awarriorphilosophy" target="_blank" rel="noopener">
+          <img class="av" src="/links/av-warrior.jpg" alt="" width="56" height="56">
+          <span class="head"><span class="name">Warrior Philosophy</span><span class="count"><b>45.6k</b> subscribers</span></span>
+          <span class="desc">Lessons from history&rsquo;s greatest warriors and martial artists, broken down for modern life.</span>
+          <svg class="go" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14 14 6M7 6h7v7"/></svg>
+        </a>
+      </li>
+      <li>
+        <a class="card" href="https://www.youtube.com/@Ben.Stevenson" target="_blank" rel="noopener">
+          <img class="av" src="/links/av-ben.jpg" alt="" width="56" height="56">
+          <span class="head"><span class="name">Personal YouTube</span><span class="count"><b>16.2k</b> subscribers</span></span>
+          <span class="desc">I try the daily routines of people like Jordan Peterson and Lex Fridman for a week, then report back.</span>
+          <svg class="go" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14 14 6M7 6h7v7"/></svg>
+        </a>
+      </li>
+      <li>
+        <a class="card" href="https://www.tiktok.com/@sciencebasedgrowth" target="_blank" rel="noopener">
+          <img class="av" src="/links/av-tiktok.jpg" alt="" width="56" height="56">
+          <span class="head"><span class="name">Science Based Growth</span><span class="count"><b>92.1k</b> followers</span></span>
+          <span class="desc">Short videos on productivity &amp; self improvement. Get smarter, happier.</span>
+          <svg class="go" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14 14 6M7 6h7v7"/></svg>
+        </a>
+      </li>
+      <li>
+        <a class="card compact" href="https://www.instagram.com/thatbenstevenson/" target="_blank" rel="noopener">
+          <span class="head"><span class="name">Instagram</span></span>
+          <span class="desc">Personal Instagram</span>
+          <svg class="go" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14 14 6M7 6h7v7"/></svg>
+        </a>
+      </li>
+      <li>
+        <a class="card" href="/">
+          <img class="av" src="/links/av-site.jpg" alt="" width="56" height="56">
+          <span class="head"><span class="name">Personal Website</span></span>
+          <span class="desc">My story, my work, and the quotes I love, all in one place.</span>
+          <svg class="go" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14 14 6M7 6h7v7"/></svg>
+        </a>
+      </li>
+    </ul>
+
+  </main>
+
+  <script>
+    // Spotlight glow follows the cursor across each card (mouse/trackpad only).
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      document.querySelectorAll('.card').forEach((card) => {
+        card.addEventListener('pointermove', (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+          card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+        });
+      });
+    }
+  </script>
+</body>
+</html>
