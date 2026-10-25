@@ -370,3 +370,50 @@ footer a:hover {
     font-size: 0.72rem;
   }
 }
+
+/* ESSAYS (published from the writing tool) */
+.essay-meta {
+  color: var(--faint);
+  font-size: 0.85rem;
+  margin: 0 0 1.6rem;
+}
+
+.essay-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.4rem 0;
+  border-radius: 6px;
+}
+
+.essay-body h2 { margin-top: 2.2rem; }
+
+.essay-body h3 {
+  font-size: 1.02rem;
+  font-weight: 650;
+  margin: 1.8rem 0 0.5rem;
+}
+
+.essay-body ul,
+.essay-body ol {
+  padding-left: 1.3rem;
+  margin: 0 0 1.15rem;
+}
+
+.essay-body ul { list-style: disc; }
+.essay-body ol { list-style: decimal; }
+
+.essay-body blockquote {
+  margin: 1.4rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--rule);
+  font-weight: 500;
+}
+
+.essay-body hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 2rem 0;
+}
+
+.essay-list li { margin-bottom: 0.7rem; }

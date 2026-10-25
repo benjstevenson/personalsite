@@ -1,0 +1,25 @@
+{
+  "rewrites": [
+    { "source": "/essays", "destination": "/api/essays-index" },
+    { "source": "/essays.html", "destination": "/api/essays-index" },
+    { "source": "/essays/:slug", "destination": "/api/essay?slug=:slug" },
+    { "source": "/img/:f", "destination": "/api/img?f=:f" }
+  ],
+  "headers": [
+    {
+      "source": "/write(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    },
+    {
+      "source": "/api/write/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex" },
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    }
+  ],
+  "crons": [{ "path": "/api/write/sweep", "schedule": "17 9 * * *" }]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "personalsite",
+  "private": true,
+  "type": "module",
+  "description": "benstevenson.io: static pages plus a few serverless functions for the timed writing tool",
+  "dependencies": {
+    "@vercel/blob": "^2.8.2",
+    "sanitize-html": "^2.18.1"
+  }
+}

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Write</title>
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .screen[hidden] { display: none; }
+
+    .wrap {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ---------- passphrase gate / message screens ---------- */
+    .center {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.9rem;
+    }
+
+    .center h1 { margin-bottom: 0.2rem; }
+    .center p { color: var(--muted); margin: 0; }
+
+    input[type="password"], input[type="text"].plain {
+      font: inherit;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid #d8d8d8;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      width: 100%;
+    }
+
+    input:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
+
+    .btn {
+      font: inherit;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.6rem 1.2rem;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: var(--ink);
+      color: #fff;
+      cursor: pointer;
+      align-self: flex-start;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover { background: #333; }
+    .btn:disabled { opacity: 0.5; cursor: default; }
+
+    .error { color: #b3261e; min-height: 1.2em; font-size: 0.9rem; }
+
+    /* ---------- editor ---------- */
+    .bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .bar-inner {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 0.7rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .clock {
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.1;
+    }
+
+    .clock small {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-top: 0.15rem;
+    }
+
+    .clock.warn { color: #b45309; }
+    .clock.danger { color: #b3261e; }
+
+    .status {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--faint);
+      text-align: right;
+    }
+
+    #title {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      font: inherit;
+      font-size: 2.15rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      padding: 2rem 0 0.6rem;
+      color: var(--ink);
+      background: transparent;
+    }
+
+    #title::placeholder { color: #c4c4c4; }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      padding: 0.5rem 0 0.9rem;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 1.3rem;
+    }
+
+    .tool {
+      font: inherit;
+      font-size: 0.85rem;
+      min-width: 2.1rem;
+      height: 2.1rem;
+      padding: 0 0.55rem;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .tool:hover { background: #f3f3f3; }
+    .tool.on { background: #ececec; border-color: #d8d8d8; }
+
+    #editor {
+      min-height: 55vh;
+      outline: 0;
+      padding-bottom: 6rem;
+      line-height: 1.6;
+      caret-color: var(--ink);
+    }
+
+    #editor:empty::before {
+      content: attr(data-placeholder);
+      color: #b9b9b9;
+      pointer-events: none;
+    }
+
+    #editor p { margin: 0 0 1.05rem; }
+    #editor h2 { margin: 1.8rem 0 0.6rem; }
+    #editor h3 { font-size: 1.02rem; font-weight: 650; margin: 1.5rem 0 0.5rem; }
+    #editor img { display: block; max-width: 100%; height: auto; margin: 1.2rem 0; border-radius: 6px; }
+    #editor ul { list-style: disc; padding-left: 1.3rem; }
+    #editor ol { list-style: decimal; padding-left: 1.3rem; }
+    #editor blockquote { margin: 1.2rem 0; padding-left: 1rem; border-left: 3px solid var(--rule); font-weight: 500; }
+
+    .rules {
+      font-size: 0.8rem;
+      color: var(--faint);
+      border-top: 1px solid var(--rule);
+      padding: 1rem 0 3rem;
+      margin: 0;
+    }
+
+    .publish-url { font-weight: 600; word-break: break-all; }
+  </style>
+</head>
+<body>
+
+  <section id="loading" class="screen wrap center"><p>Loading…</p></section>
+
+  <section id="notconfigured" class="screen wrap center" hidden>
+    <h1>Not set up yet</h1>
+    <p>The writing tool needs a passphrase. Add a <code>WRITE_PASSPHRASE</code> environment variable in Vercel, then redeploy.</p>
+  </section>
+
+  <section id="gate" class="screen wrap center" hidden>
+    <h1>Write</h1>
+    <form id="gate-form" autocomplete="off">
+      <input id="passphrase" type="password" placeholder="Passphrase" autocomplete="current-password" aria-label="Passphrase">
+      <div id="gate-error" class="error" role="alert"></div>
+      <button class="btn" type="submit">Unlock</button>
+    </form>
+  </section>
+
+  <section id="expired" class="screen wrap center" hidden>
+    <h1>Time's up.</h1>
+    <p>The clock ran out before you published, so the draft and its images have been deleted. That's the deal.</p>
+    <a class="btn" href="/write/">Start a new one</a>
+  </section>
+
+  <section id="published" class="screen wrap center" hidden>
+    <h1>Published.</h1>
+    <p>It's live: <a id="published-link" class="publish-url" href="#"></a></p>
+    <a class="btn" href="/write/">Write another</a>
+  </section>
+
+  <section id="app" class="screen" hidden>
+    <div class="bar">
+      <div class="bar-inner">
+        <div id="clock" class="clock" aria-live="off">3:00:00<small id="clock-note">Starts when you type</small></div>
+        <div id="status" class="status"></div>
+        <button id="publish" class="btn" type="button">Publish</button>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <input id="title" type="text" placeholder="Title" maxlength="200" autocomplete="off" aria-label="Title">
+
+      <div class="toolbar" role="toolbar" aria-label="Formatting">
+        <button class="tool" type="button" data-cmd="bold" title="Bold (Cmd/Ctrl+B)"><b>B</b></button>
+        <button class="tool" type="button" data-cmd="italic" title="Italic (Cmd/Ctrl+I)"><i>I</i></button>
+        <button class="tool" type="button" data-cmd="underline" title="Underline (Cmd/Ctrl+U)"><u>U</u></button>
+        <button class="tool" type="button" data-block="h2" title="Heading">H</button>
+        <button class="tool" type="button" data-block="blockquote" title="Quote">&ldquo;</button>
+        <button class="tool" type="button" data-cmd="insertUnorderedList" title="Bulleted list">&bull; List</button>
+        <button class="tool" type="button" data-cmd="insertOrderedList" title="Numbered list">1. List</button>
+        <button class="tool" type="button" id="link-btn" title="Link (Cmd/Ctrl+K)">Link</button>
+        <button class="tool" type="button" id="image-btn" title="Add image (or paste / drop one)">Image</button>
+        <input id="file" type="file" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+      </div>
+
+      <div id="editor" contenteditable="true" spellcheck="true" data-placeholder="Start typing. Your 3-hour timer starts with the first word."></div>
+
+      <p class="rules">Once you start, you have three hours. There is no pause and no cancel. Publish before the clock hits zero, or the draft and its images are deleted for good.</p>
+    </div>
+  </section>
+
+  <script src="/write/editor.js"></script>
+</body>
+</html>
