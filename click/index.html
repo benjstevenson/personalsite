@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Ben Stevenson — Links</title>
   <meta name="robots" content="noindex">
   <script defer src="/_vercel/insights/script.js"></script>
@@ -16,6 +16,8 @@
       --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
+
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 
     body {
       margin: 0;
@@ -32,7 +34,7 @@
     main {
       max-width: 520px;
       margin: 0 auto;
-      padding: 3.5rem 1.25rem 4rem;
+      padding: 3.5rem max(1.25rem, env(safe-area-inset-right)) calc(4rem + env(safe-area-inset-bottom)) max(1.25rem, env(safe-area-inset-left));
       text-align: center;
     }
 
@@ -113,6 +115,7 @@
         transform 0.35s var(--ease),
         box-shadow 0.35s var(--ease);
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
     /* cursor-following spotlight */
@@ -174,13 +177,6 @@
       font-weight: bold;
       letter-spacing: -0.01em;
       line-height: 1.25;
-    }
-
-    .plat {
-      margin-right: auto;
-      font-size: 0.88rem;
-      color: var(--muted);
-      white-space: nowrap;
     }
 
     .count {
@@ -291,12 +287,59 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* touch devices: no hover arrow, tighter card */
+    /* ---------- phones (most visitors) ---------- */
     @media (max-width: 520px) {
+      main {
+        padding: 2rem max(1rem, env(safe-area-inset-right)) calc(2.5rem + env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+      }
+
+      .avatar { width: 88px; height: 88px; margin-bottom: 0.85rem; box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--line), 0 10px 26px rgba(0, 0, 0, 0.16); }
+      h1 { font-size: 1.15rem; margin-bottom: 0.45rem; }
+      .bio { max-width: none; font-size: 0.88rem; line-height: 1.58; margin-bottom: 1.5rem; padding: 0 0.25rem; }
+
+      .links { gap: 0.65rem; }
+
+      .card {
+        grid-template-columns: 48px 1fr;
+        grid-template-areas: "av head" "av desc";
+        column-gap: 0.8rem;
+        row-gap: 0.15rem;
+        padding: 0.85rem 0.9rem;
+        border-radius: 20px;
+        align-items: start;
+      }
+
       .go { display: none; }
-      .av { align-self: start; margin-top: 0.15rem; }
-      .card { grid-template-columns: 56px 1fr; grid-template-areas: "av head" "av desc"; padding-right: 0.95rem; }
-      .card.compact { grid-template-columns: 1fr; grid-template-areas: "head" "desc"; }
+
+      .av, .icon { width: 48px; height: 48px; margin-top: 0.1rem; }
+      .icon svg { width: 22px; height: 22px; }
+
+      /* consistent stack: title, then follower chip, then blurb */
+      .head { display: block; }
+      .name { display: block; font-size: 1.02rem; line-height: 1.3; }
+      .count { display: block; width: fit-content; margin: 0.28rem 0 0.1rem; font-size: 0.72rem; padding: 0.16rem 0.55rem; }
+      .desc { font-size: 0.84rem; line-height: 1.42; }
+
+      .card.compact { grid-template-columns: 1fr; grid-template-areas: "head" "desc"; padding: 0.8rem 1rem; }
+      .card.compact .name { font-size: 1rem; }
+    }
+
+    /* very small phones */
+    @media (max-width: 360px) {
+      .card { column-gap: 0.65rem; padding: 0.8rem 0.75rem; grid-template-columns: 44px 1fr; }
+      .av, .icon { width: 44px; height: 44px; }
+      .name { font-size: 1rem; }
+      .desc { font-size: 0.82rem; }
+    }
+
+    /* touch screens: no sticky "hover" lift after a tap; press feedback only */
+    @media (hover: none) {
+      .card:hover { transform: none; box-shadow: 0 0 0 1px var(--line), 0 1px 2px rgba(0,0,0,0.04), 0 8px 22px -8px rgba(0,0,0,0.12); }
+      .card.primary:hover { transform: none; box-shadow: 0 0 0 1px #000, inset 0 1px 0 rgba(255,255,255,0.14), 0 12px 28px -10px rgba(0,0,0,0.5); }
+      .card:hover::before { opacity: 0; }
+      .card:hover .av, .card.primary:hover .icon { transform: none; }
+      .card:hover .go { transform: none; }
+      .card:active { transform: scale(0.98); transition-duration: 0.08s; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -357,7 +400,7 @@
       <li>
         <a class="card" href="https://www.tiktok.com/@sciencebasedgrowth" target="_blank" rel="noopener">
           <img class="av" src="/click/av-tiktok.jpg" alt="" width="56" height="56">
-          <span class="head"><span class="name">Science Based Growth</span><span class="plat">(TikTok)</span><span class="count"><b>92.1k</b> followers</span></span>
+          <span class="head"><span class="name">Science Based Growth (TikTok)</span><span class="count"><b>92.1k</b> followers</span></span>
           <span class="desc">Short videos on productivity &amp; self improvement. Get smarter, happier.</span>
           <svg class="go" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14 14 6M7 6h7v7"/></svg>
         </a>
