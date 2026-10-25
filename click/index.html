@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ben Stevenson — Links</title>
+  <meta name="robots" content="noindex">
+  <script defer src="/_vercel/insights/script.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #fff;
+      color: #111;
+      font-family: Georgia, 'Times New Roman', serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 3.5rem 1.25rem 4rem;
+      text-align: center;
+    }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.13);
+      margin: 0 auto 1.1rem;
+      display: block;
+      animation: rise 0.5s ease-out both;
+    }
+
+    h1 {
+      font-size: 1.15rem;
+      font-weight: normal;
+      letter-spacing: -0.01em;
+      margin: 0 0 0.6rem;
+    }
+
+    .bio {
+      margin: 0 0 2rem;
+      color: #555;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .bio span { display: block; }
+
+    .links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .links a {
+      display: block;
+      padding: 0.95rem 1.25rem;
+      border: 1px solid #ddd;
+      border-radius: 999px;
+      background: #fff;
+      color: #111;
+      text-decoration: none;
+      font-size: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .links a:hover,
+    .links a:focus-visible {
+      transform: translateY(-2px);
+      border-color: #111;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      outline: none;
+    }
+
+    .links a.primary {
+      background: #111;
+      border-color: #111;
+      color: #fff;
+    }
+
+    .links li { animation: rise 0.5s ease-out both; }
+    .links li:nth-child(1) { animation-delay: 0.05s; }
+    .links li:nth-child(2) { animation-delay: 0.10s; }
+    .links li:nth-child(3) { animation-delay: 0.15s; }
+    .links li:nth-child(4) { animation-delay: 0.20s; }
+    .links li:nth-child(5) { animation-delay: 0.25s; }
+    .links li:nth-child(6) { animation-delay: 0.30s; }
+    .links li:nth-child(7) { animation-delay: 0.35s; }
+
+    .home {
+      display: inline-block;
+      margin-top: 2.5rem;
+      font-size: 0.85rem;
+      color: #999;
+      text-decoration: none;
+    }
+
+    .home:hover { color: #111; text-decoration: underline; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .avatar, .links li { animation: none; }
+      .links a { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <img class="avatar" src="/click/avatar.jpg" alt="Ben Stevenson" width="96" height="96">
+    <h1>@ben.stevenson</h1>
+    <p class="bio">
+      <span>🚀 Head of growth @ Upgraded (YC S16)</span>
+      <span>🧘🏼‍♂️ Mastering marketing and AI, not necessarily in that order</span>
+      <span>🤙🏼 Make life an adventure</span>
+    </p>
+
+    <ul class="links">
+      <li><a class="primary" href="https://www.sciencebased.ai" target="_blank" rel="noopener">Science Based AI</a></li>
+      <li><a href="mailto:bsteve731@gmail.com">Contact</a></li>
+      <li><a href="https://www.youtube.com/@awarriorphilosophy" target="_blank" rel="noopener">Warrior Philosophy</a></li>
+      <li><a href="https://www.youtube.com/@Ben.Stevenson" target="_blank" rel="noopener">Personal YouTube</a></li>
+      <li><a href="https://www.tiktok.com/@sciencebasedgrowth" target="_blank" rel="noopener">TikTok</a></li>
+      <li><a href="https://www.instagram.com/thatbenstevenson/" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://x.com/thebenstevenson" target="_blank" rel="noopener">Twitter</a></li>
+    </ul>
+
+    <a class="home" href="/">benstevenson.io</a>
+  </main>
+</body>
+</html>
